@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Shop.Core.Domain;
 using Microsoft.EntityFrameworkCore;
+using Shop.Core.Dto;
 
 namespace Shop.ApplicationServices.SpaceshipServices
 {
@@ -19,9 +20,29 @@ namespace Shop.ApplicationServices.SpaceshipServices
             _context = context;
         }
 
-        async Task<Spaceship?> ISpaceshipServices.DetailAsync(Guid spaceshipId)
+        async Task<Spaceship?> ISpaceshipServices.GetShipAsync(Guid spaceshipId)
         {
             return await _context.Spaceships.FirstOrDefaultAsync(x => x.Id == spaceshipId);
+        }
+
+        async Task<Spaceship> ISpaceshipServices.UpdateAsync(SpaceshipDto spaceship)
+        {
+            Spaceship domain = new Spaceship();
+            
+            domain.Id = spaceship.Id;
+            domain.Name = spaceship.Name;
+            domain.Typename = spaceship.Typename;
+            domain.SpaceshipModel = spaceship.SpaceshipModel;
+            domain.BuildDate = spaceship.BuildDate;
+            domain.Crew = spaceship.Crew;
+            domain.EnginePower = spaceship.EnginePower;
+            domain.CreatedAt = spaceship.CreatedAt;
+            domain.LastUpdatedAt = spaceship.LastUpdatedAt;
+
+            _context.Update(domain);
+            await _context.SaveChangesAsync();
+
+            return domain;
         }
     }
 }

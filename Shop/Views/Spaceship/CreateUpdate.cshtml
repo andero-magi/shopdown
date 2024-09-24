@@ -1,0 +1,56 @@
+﻿@model Shop.Models.Spaceships.SpaceshipCreateUpdateViewModel;
+
+<h1>Update</h1>
+
+<div>
+    <form method="post" enctype="multipart/form-data">
+        <input asp-for="Dto.Id" type="hidden"/>
+        <input asp-for="Dto.CreatedAt" type="hidden"/>
+        <input asp-for="Dto.LastUpdatedAt" type="hidden"/>
+
+        <div class="form-group row">
+            <label asp-for="Dto.Name"></label>
+            <div class="col-sm-10">
+                <input asp-for="Dto.Name" class="form-control"/>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label asp-for="Dto.Typename"></label>
+            <div class="col-sm-10">
+                <input asp-for="Dto.Typename" class="form-control"/>
+            </div>
+        
+        </div>
+
+        <div class="form-group row">
+            <label asp-for="Dto.SpaceshipModel"></label>
+            <div class="col-sm-10">
+                <input asp-for="Dto.SpaceshipModel" class="form-control"/>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label asp-for="Dto.BuildDate"></label>
+            <div class="col-sm-10">
+                <input asp-for="Dto.BuildDate" class="form-control"/>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label asp-for="Dto.Crew"></label>
+            <div class="col-sm-10">
+                <input asp-for="Dto.Crew" class="form-control"/>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label asp-for="Dto.EnginePower"></label>
+            <div class="col-sm-10">
+                <input asp-for="Dto.EnginePower" class="form-control"/>
+            </div>
+        </div>
+
+        <input asp-action="Update" asp-controller="Spaceship" type="submit" class="btn btn-primary" value="Update"/>
+    </form>
+</div>

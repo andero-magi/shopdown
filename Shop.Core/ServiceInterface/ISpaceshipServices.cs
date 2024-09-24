@@ -1,4 +1,5 @@
 ﻿using Shop.Core.Domain;
+using Shop.Core.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,8 @@ namespace Shop.Core.ServiceInterface
 {
     public interface ISpaceshipServices
     {
-        public Task<Spaceship?> DetailAsync(Guid spaceshipId);
+        public Task<Spaceship?> GetShipAsync(Guid spaceshipId);
+
+        public Task<Spaceship> UpdateAsync(SpaceshipDto spaceship);
     }
 }

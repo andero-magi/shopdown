@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Shop.Core.Domain;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Shop.Core.Dto
 {
-    public class SpaceshitDto
+    public class SpaceshipDto
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
@@ -22,5 +23,21 @@ namespace Shop.Core.Dto
 
         public DateTime CreatedAt { get; set; }
         public DateTime LastUpdatedAt { get; set; }
+
+
+        public SpaceshipDto() {}
+
+        public SpaceshipDto(Spaceship ship)
+        {
+            Id = ship.Id;
+            Name = ship.Name;
+            Typename = ship.Typename;
+            SpaceshipModel = ship.SpaceshipModel;
+            BuildDate = ship.BuildDate;
+            Crew = ship.Crew;
+            EnginePower = ship.EnginePower;
+            CreatedAt = ship.CreatedAt;
+            LastUpdatedAt = ship.LastUpdatedAt;
+        }
     }
 }
