@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using Shop.Core.ServiceInterface;
 using Shop.Data;
+using Shop.ApplicationServices.SpaceshipServices;
 
 namespace Shop
 {
@@ -11,6 +13,8 @@ namespace Shop
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddScoped<ISpaceshipServices, SpaceshipServices>();
+
             // Add services to the container.
             builder.Services.AddDbContext<ShopContext>(options =>
             {
@@ -18,6 +22,22 @@ namespace Shop
             });
 
             var app = builder.Build();
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+
+                try
+                {
+                    var ctx = services.GetRequiredService<ShopContext>();
+                    DbInitializer.InitDb(ctx);
+                }
+                catch (Exception ex)
+                {
+                    var logger = services.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(ex, "An error occurred while seeding the database.");
+                }
+            }
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
