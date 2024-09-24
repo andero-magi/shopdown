@@ -87,5 +87,42 @@ namespace Shop.Controllers
 
             return RedirectToAction(nameof(Update), vm.Dto.Id);
         }
+
+        public async Task<IActionResult> Delete(Guid? guid)
+        {
+            if (guid == null)
+            {
+                return NotFound();
+            }
+
+            var ship = await _services.GetShipAsync((Guid)guid);
+            if (ship == null)
+            {
+                return NotFound();
+            }
+
+            var vm = new SpaceshipDeleteViewModel();
+            vm.Ship = ship;
+
+            return View(vm);
+        }
+
+        [HttpPost]
+        [ActionName("Delete")]
+        public async Task<IActionResult> ConfirmDelete(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var result = await _services.Delete((Guid)id);
+            if (result != null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            return RedirectToAction(nameof(Delete));
+        }
     }
 }

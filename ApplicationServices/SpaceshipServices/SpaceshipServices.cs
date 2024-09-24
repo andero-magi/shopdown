@@ -44,5 +44,19 @@ namespace Shop.ApplicationServices.SpaceshipServices
 
             return domain;
         }
+
+        async Task<Spaceship?> ISpaceshipServices.Delete(Guid guid)
+        {
+            Spaceship? ship = await ((ISpaceshipServices)this).GetShipAsync(guid);
+            if (ship == null)
+            {
+                return null;
+            }
+
+            _context.Remove(ship);
+            await _context.SaveChangesAsync();
+
+            return ship;
+        }
     }
 }
