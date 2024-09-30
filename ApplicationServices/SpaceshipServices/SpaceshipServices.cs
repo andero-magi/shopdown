@@ -28,16 +28,7 @@ namespace Shop.ApplicationServices.SpaceshipServices
         async Task<Spaceship> ISpaceshipServices.UpdateAsync(SpaceshipDto spaceship)
         {
             Spaceship domain = new Spaceship();
-            
-            domain.Id = spaceship.Id;
-            domain.Name = spaceship.Name;
-            domain.Typename = spaceship.Typename;
-            domain.SpaceshipModel = spaceship.SpaceshipModel;
-            domain.BuildDate = spaceship.BuildDate;
-            domain.Crew = spaceship.Crew;
-            domain.EnginePower = spaceship.EnginePower;
-            domain.CreatedAt = spaceship.CreatedAt;
-            domain.LastUpdatedAt = spaceship.LastUpdatedAt;
+            spaceship.TransferTo(domain);
 
             _context.Update(domain);
             await _context.SaveChangesAsync();
@@ -54,6 +45,19 @@ namespace Shop.ApplicationServices.SpaceshipServices
             }
 
             _context.Remove(ship);
+            await _context.SaveChangesAsync();
+
+            return ship;
+        }
+
+        async Task<Spaceship> ISpaceshipServices.Create(SpaceshipDto dto)
+        {
+            Spaceship ship = new();
+            dto.TransferTo(ship);
+            ship.CreatedAt = DateTime.Now;
+            ship.LastUpdatedAt = DateTime.Now;
+
+            await _context.AddAsync(ship);
             await _context.SaveChangesAsync();
 
             return ship;

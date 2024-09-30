@@ -16,6 +16,10 @@
             @Html.DisplayFor(m => m.Ship.Typename)
         </div>
         <div class="form-group row">
+            <label asp-for="Ship.SpaceshipModel" class="col-sm-2 col-form-label"></label>
+            @Html.DisplayFor(m => m.Ship.SpaceshipModel)
+        </div>
+        <div class="form-group row">
             <label asp-for="Ship.BuildDate" class="col-sm-2 col-form-label"></label>
             @Html.DisplayFor(m => m.Ship.BuildDate)
         </div>

@@ -11,6 +11,7 @@ namespace Shop.Data
     public class ShopContext: DbContext
     {
         public DbSet<Spaceship> Spaceships { get; set; }
+        public DbSet<FileToApi> Files { get; set; }
 
         public ShopContext(DbContextOptions options)
             : base(options)

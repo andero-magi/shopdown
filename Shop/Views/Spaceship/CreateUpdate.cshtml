@@ -1,6 +1,6 @@
 ﻿@model Shop.Models.Spaceships.SpaceshipCreateUpdateViewModel;
 
-<h1>Update</h1>
+<h1>@ViewData["Title"]</h1>
 
 <div>
     <form method="post" enctype="multipart/form-data">
@@ -51,6 +51,13 @@
             </div>
         </div>
 
-        <input asp-action="Update" asp-controller="Spaceship" type="submit" class="btn btn-primary" value="Update"/>
+        @if (ViewData["Title"]!.Equals("Create"))
+        {
+            <input asp-action="Create" asp-controller="Spaceship" type="submit" class="btn btn-primary" value="Create" />
+        } 
+        else
+        {
+            <input asp-action="Update" asp-controller="Spaceship" type="submit" class="btn btn-primary" value="Update" />
+        }
     </form>
 </div>

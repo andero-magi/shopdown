@@ -1,4 +1,5 @@
-﻿using Shop.Core.Domain;
+﻿using Microsoft.AspNetCore.Http;
+using Shop.Core.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,8 @@ namespace Shop.Core.Dto
 
         public int EnginePower { get; set; }
 
+        public List<IFormFile> Files { get; set; }
+
         public DateTime CreatedAt { get; set; }
         public DateTime LastUpdatedAt { get; set; }
 
@@ -38,6 +41,19 @@ namespace Shop.Core.Dto
             EnginePower = ship.EnginePower;
             CreatedAt = ship.CreatedAt;
             LastUpdatedAt = ship.LastUpdatedAt;
+        }
+
+        public void TransferTo(Spaceship domain)
+        {
+            domain.Id = this.Id;
+            domain.Name = this.Name;
+            domain.Typename = this.Typename;
+            domain.SpaceshipModel = this.SpaceshipModel;
+            domain.BuildDate = this.BuildDate;
+            domain.Crew = this.Crew;
+            domain.EnginePower = this.EnginePower;
+            domain.CreatedAt = this.CreatedAt;
+            domain.LastUpdatedAt = this.LastUpdatedAt;
         }
     }
 }

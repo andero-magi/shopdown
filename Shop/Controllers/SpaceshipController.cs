@@ -65,6 +65,7 @@ namespace Shop.Controllers
             var vm = new SpaceshipCreateUpdateViewModel();
             vm.Dto = new SpaceshipDto(ship);
 
+            ViewData["Title"] = "Update";
             return View("CreateUpdate", vm);
         }
 
@@ -123,6 +124,26 @@ namespace Shop.Controllers
             }
 
             return RedirectToAction(nameof(Delete));
+        }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            SpaceshipCreateUpdateViewModel vm = new();
+            vm.Dto = new SpaceshipDto();
+            ViewData["Title"] = "Create";
+            return View("CreateUpdate", vm);
+        }
+
+        public async Task<IActionResult> Create(SpaceshipCreateUpdateViewModel? vm)
+        {
+            if (vm == null)
+            {
+                return NotFound();
+            }
+
+            var result = await _services.Create(vm.Dto);
+            return RedirectToAction(nameof(Index));
         }
     }
 }
