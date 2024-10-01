@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Shop.Core.Domain;
 using Shop.Core.Dto;
 using Shop.Core.ServiceInterface;
 using Shop.Data;
+using Shop.Models;
 using Shop.Models.Spaceships;
 
 namespace Shop.Controllers
@@ -42,8 +44,14 @@ namespace Shop.Controllers
                 return NotFound();
             }
 
+            var images = await _context.Files
+                .Where(x => x.SpaceshipId == id)
+                .Select(y => new ImageViewModel(y))
+                .ToListAsync();
+
             var vm = new SpaceshipDetailViewModel();
             vm.Ship = ship;
+            vm.Images = images;
 
             return View(vm);
         }
