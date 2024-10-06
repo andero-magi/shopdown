@@ -1,0 +1,42 @@
+﻿@model Shop.Core.Domain.Kindergarten;
+
+<div>
+    <h4>Kindergarten</h4>
+    <hr />
+    <dl class="row">
+        <div class="form-group row">
+            <label asp-for="Id" class="col-sm-2 col-form-label"></label>
+            @Html.DisplayFor(m => m.Id)
+        </div>
+
+        <div class="form-group row">
+            <label asp-for="GroupName" class="col-sm-2 col-form-label"></label>
+            @Html.DisplayFor(m => m.GroupName)
+        </div>
+
+        <div class="form-group row">
+            <label asp-for="ChildrenCount" class="col-sm-2 col-form-label"></label>
+            @Html.DisplayFor(m => m.ChildrenCount)
+        </div>
+
+        <div class="form-group row">
+            <label asp-for="KindergartenName" class="col-sm-2 col-form-label"></label>
+            @Html.DisplayFor(m => m.KindergartenName)
+        </div>
+
+        <div class="form-group row">
+            <label asp-for="Teacher" class="col-sm-2 col-form-label"></label>
+            @Html.DisplayFor(m => m.Teacher)
+        </div>
+
+        <div class="form-group row">
+            <label asp-for="CreationDate" class="col-sm-2 col-form-label"></label>
+            @Html.DisplayFor(m => m.CreationDate)
+        </div>
+
+        <div class="form-group row">
+            <label asp-for="LastUpdateDate" class="col-sm-2 col-form-label"></label>
+            @Html.DisplayFor(m => m.LastUpdateDate)
+        </div>
+    </dl>
+</div>

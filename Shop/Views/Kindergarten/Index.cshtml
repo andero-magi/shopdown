@@ -1,2 +1,53 @@
+<<<<<<< Updated upstream
 ﻿
 <h1>Kindergartens</h1>
+=======
+﻿@model IEnumerable<Shop.Models.Kindergartens.KindergartenIndexViewModel>;
+
+<h1>Kindergartens</h1>
+
+@{
+    ViewData["Title"] = "Kindergartens";
+    int rowNumber = 0;
+}
+
+<div>
+    <a asp-action="Create" asp-controller="Kindergarten" type="submit" class="btn btn-primary">Create</a>
+</div>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Nr</th>
+            <th scope="col">Group Name</th>
+            <th scope="col">Children Count</th>
+            <th scope="col">Kindergarten Name</th>
+            <th scope="col">Teacher</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            rowNumber = 1;
+        }
+
+        @foreach(var k in Model) 
+        {
+            <tr>
+                <td>@rowNumber</td>
+                <td>@k.Kindergarten.GroupName</td>
+                <td>@k.Kindergarten.ChildrenCount</td>
+                <td>@k.Kindergarten.KindergartenName</td>
+                <td>@k.Kindergarten.Teacher</td>
+                <td>
+                    <a asp-action="Details" asp-controller="Kindergarten" asp-route-guid="@k.Kindergarten.Id" class="btn btn-info">Details</a>
+                    <a asp-action="Update" asp-controller="Kindergarten" asp-route-guid="@k.Kindergarten.Id" class="btn btn-primary">Update</a>
+                    <a asp-action="Delete" asp-controller="Kindergarten" asp-route-guid="@k.Kindergarten.Id" class="btn btn-outline-danger">Delete</a>
+                </td>
+            </tr>
+
+            rowNumber += 1;
+        }
+    </tbody>
+</table>
+>>>>>>> Stashed changes

@@ -1,0 +1,11 @@
+﻿@model Shop.Models.Kindergartens.KindergartenDetailsViewModel;
+
+@{
+    ViewData["Title"] = "Kindergarten Details";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<partial name="_KindergartenFields" model="Model.Kindergarten"/>
+
+<a asp-action="Index" asp-controller="Kindergarten" class="btn btn-primary">Back</a>

@@ -1,0 +1,51 @@
+﻿@model Shop.Models.Kindergartens.KindergartenUpdateViewModel;
+
+@{
+    bool isCreate = (ViewData["isCreate"] ?? "false").Equals("true");
+    ViewData["Title"] = isCreate ? "Create" : "Update";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form method="post" enctype="multipart/form-data">
+    <input asp-for="Dto.Id" type="hidden"/>
+    <input asp-for="Dto.CreationDate" type="hidden"/>
+    <input asp-for="Dto.LastUpdateDate" type="hidden"/>
+
+    <div class="form-group row">
+        <label asp-for="Dto.GroupName" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Dto.GroupName"/>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label asp-for="Dto.ChildrenCount" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Dto.ChildrenCount"/>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label asp-for="Dto.KindergartenName" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Dto.KindergartenName"/>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label asp-for="Dto.Teacher" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Dto.Teacher"/>
+        </div>
+    </div>
+
+    @if (isCreate)
+    {
+        <input asp-action="Create" asp-controller="Kindergarten" type="submit" class="btn btn-primary" value="Create"/>
+    }
+    else 
+    {
+        <input asp-action="Update" asp-controller="Kindergarten" type="submit" class="btn btn-primary" value="Update"/>
+    }
+</form>
