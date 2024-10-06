@@ -22,7 +22,11 @@ namespace Shop
             {
                 options.UseSqlServer(
                     builder.Configuration.GetConnectionString("DefaultConnection"),
-                    options => options.EnableRetryOnFailure()
+                    options => 
+                    {
+                        options.EnableRetryOnFailure();
+                        options.MigrationsAssembly("Shop.Data");
+                    }
                 );
             });
 
