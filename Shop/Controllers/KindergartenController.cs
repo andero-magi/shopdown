@@ -1,31 +1,16 @@
 using Microsoft.AspNetCore.Mvc;
-<<<<<<< Updated upstream
-using Shop.Data;
-=======
 using Microsoft.EntityFrameworkCore;
 using Shop.Core.Domain;
 using Shop.Core.Dto;
 using Shop.Core.ServiceInterface;
 using Shop.Data;
 using Shop.Models.Kindergartens;
->>>>>>> Stashed changes
 
 namespace Shop.Controllers;
 
 public class KindergartenController : Controller
 {
     private readonly ShopContext _context;
-<<<<<<< Updated upstream
-
-    public KindergartenController(ShopContext context)
-    {
-        _context = context;
-    }
-
-    public IActionResult Index() 
-    {
-        return View();
-=======
     private readonly IKindergartenService _kindergartens;
 
     public KindergartenController(ShopContext context, IKindergartenService service)
@@ -136,6 +121,5 @@ public class KindergartenController : Controller
 
         await _kindergartens.CreateAsync(vm.Dto);
         return RedirectToAction(nameof(Index));
->>>>>>> Stashed changes
     }
 }
