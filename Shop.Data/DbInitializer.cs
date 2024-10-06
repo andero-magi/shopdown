@@ -43,6 +43,38 @@ namespace Shop.Data
                 context.Spaceships.AddRange(ships);
                 context.SaveChanges();
             }
+
+            if (!context.Kindergartens.Any()) 
+            {
+                var random = new Random();
+
+                var kindergartens = new Kindergarten[] 
+                {
+                    new() 
+                    {
+                        Id = Guid.NewGuid(),
+                        GroupName = "Foo",
+                        ChildrenCount = random.Next(5, 24),
+                        KindergartenName = "KinderEgg",
+                        Teacher = "Mr. Roswell Incident",
+                        CreationDate = DateTime.Now.AddYears(-3),
+                        LastUpdateDate = DateTime.Now.AddDays(2)
+                    },
+                    new() 
+                    {
+                        Id = Guid.NewGuid(),
+                        GroupName = "BarFoo",
+                        ChildrenCount = random.Next(5, 24),
+                        KindergartenName = "Kinder Surprise Egg",
+                        Teacher = "King Ludwig II, of Bavaria",
+                        CreationDate = new DateTime(1869, 9, 5),
+                        LastUpdateDate = DateTime.Now.AddDays(-2)
+                    }
+                };
+
+                context.Kindergartens.AddRange(kindergartens);
+                context.SaveChanges();
+            }
         }
     }
 }
