@@ -123,14 +123,14 @@ namespace Shop.Controllers
 
         [HttpPost]
         [ActionName("Delete")]
-        public async Task<IActionResult> ConfirmDelete(Guid? id)
+        public async Task<IActionResult> ConfirmDelete(SpaceshipDeleteViewModel? vm)
         {
-            if (id == null)
+            if (vm == null)
             {
                 return NotFound();
             }
 
-            var result = await _services.Delete((Guid)id);
+            var result = await _services.Delete(vm.Ship.Id);
             if (result != null)
             {
                 return RedirectToAction(nameof(Index));

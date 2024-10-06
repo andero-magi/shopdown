@@ -34,7 +34,7 @@
                     <td>
                         <a asp-action="Details" asp-controller="Spaceship" asp-route-id="@spaceships.Ship.Id" class="btn btn-info">Details</a>
                         <a asp-action="Update" asp-controller="Spaceship" asp-route-id="@spaceships.Ship.Id" class="btn btn-primary">Update</a>
-                        <a asp-action="Delete" asp-controller="Spaceship" asp-route-id="@spaceships.Ship.Id" class="btn btn-outline-danger">Delete</a>
+                        <a asp-action="Delete" asp-controller="Spaceship" asp-route-guid="@spaceships.Ship.Id" class="btn btn-outline-danger">Delete</a>
                     </td>
                 </tr>
 

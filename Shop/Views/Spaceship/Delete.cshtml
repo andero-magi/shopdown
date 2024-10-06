@@ -77,9 +77,9 @@
         </div>
     </dl>
 
-    <form asp-action="DeleteConfirmation">
+    <form asp-action="Delete" asp-controller="Spaceship">
         <input type="hidden" asp-for="Ship.Id" />
         <input type="submit" value="Delete" class="btn btn-danger" />
-        <a asp-action="Index" asp-controller="spaceships" class="btn btn-success">Back</a>
+        <a asp-action="Index" asp-controller="Spaceship" class="btn btn-success">Back</a>
     </form>
 </div>
