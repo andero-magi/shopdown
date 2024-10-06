@@ -14,10 +14,12 @@ namespace Shop.ApplicationServices.SpaceshipServices
     public class SpaceshipServices: ISpaceshipServices
     {
         private readonly ShopContext _context;
+        private readonly IFileService _files;
 
-        public SpaceshipServices(ShopContext context)
+        public SpaceshipServices(ShopContext context, IFileService files)
         {
             _context = context;
+            _files = files;
         }
 
         async Task<Spaceship?> ISpaceshipServices.GetShipAsync(Guid spaceshipId)
@@ -29,6 +31,8 @@ namespace Shop.ApplicationServices.SpaceshipServices
         {
             Spaceship domain = new Spaceship();
             spaceship.TransferTo(domain);
+
+            _files.FilesToApi(spaceship, domain);
 
             _context.Update(domain);
             await _context.SaveChangesAsync();
@@ -44,6 +48,17 @@ namespace Shop.ApplicationServices.SpaceshipServices
                 return null;
             }
 
+            var images = await _context.Files
+                .Where(x => x.SpaceshipId == guid)
+                .Select(y => new FileToApiDto
+                {
+                    Id = y.Id,
+                    SpaceshipId = y.SpaceshipId,
+                    ExistingFilePath = y.ExistingFilePath
+                }).ToArrayAsync();
+
+            await _files.RemoveImagesFromApi(images);
+
             _context.Remove(ship);
             await _context.SaveChangesAsync();
 
@@ -56,6 +71,8 @@ namespace Shop.ApplicationServices.SpaceshipServices
             dto.TransferTo(ship);
             ship.CreatedAt = DateTime.Now;
             ship.LastUpdatedAt = DateTime.Now;
+
+            _files.FilesToApi(dto, ship);
 
             await _context.AddAsync(ship);
             await _context.SaveChangesAsync();

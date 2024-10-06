@@ -13,11 +13,13 @@ namespace Shop.Controllers
     {
         private readonly ShopContext _context;
         private readonly ISpaceshipServices _services;
+        private readonly ILogger<SpaceshipController> _logger;
 
-        public SpaceshipController(ShopContext context, ISpaceshipServices services)
+        public SpaceshipController(ShopContext context, ISpaceshipServices services, ILogger<SpaceshipController> logger)
         {
             _context = context;
             _services = services;
+            _logger = logger;
         }
 
         public IActionResult Index()
@@ -44,14 +46,11 @@ namespace Shop.Controllers
                 return NotFound();
             }
 
-            var images = await _context.Files
-                .Where(x => x.SpaceshipId == id)
-                .Select(y => new ImageViewModel(y))
-                .ToListAsync();
-
-            var vm = new SpaceshipDetailViewModel();
-            vm.Ship = ship;
-            vm.Images = images;
+            var vm = new SpaceshipDetailViewModel
+            {
+                Ship = ship,
+                Images = await GetImageViewModelsAsync(ship.Id)
+            };
 
             return View(vm);
         }
@@ -70,8 +69,11 @@ namespace Shop.Controllers
                 return NotFound();
             }
 
-            var vm = new SpaceshipCreateUpdateViewModel();
-            vm.Dto = new SpaceshipDto(ship);
+            SpaceshipCreateUpdateViewModel vm = new()
+            {
+                Dto = new SpaceshipDto(ship),
+                Images = await GetImageViewModelsAsync(ship.Id)
+            };
 
             ViewData["Title"] = "Update";
             return View("CreateUpdate", vm);
@@ -110,8 +112,11 @@ namespace Shop.Controllers
                 return NotFound();
             }
 
-            var vm = new SpaceshipDeleteViewModel();
-            vm.Ship = ship;
+            var vm = new SpaceshipDeleteViewModel
+            {
+                Ship = ship,
+                Images = await GetImageViewModelsAsync(ship.Id)
+            };
 
             return View(vm);
         }
@@ -137,8 +142,12 @@ namespace Shop.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            SpaceshipCreateUpdateViewModel vm = new();
-            vm.Dto = new SpaceshipDto();
+            SpaceshipCreateUpdateViewModel vm = new()
+            {
+                Dto = new SpaceshipDto(),
+                Images = []
+            };
+
             ViewData["Title"] = "Create";
             return View("CreateUpdate", vm);
         }
@@ -152,6 +161,17 @@ namespace Shop.Controllers
 
             var result = await _services.Create(vm.Dto);
             return RedirectToAction(nameof(Index));
+        }
+
+        private async Task<List<ImageViewModel>> GetImageViewModelsAsync(Guid spaceshipId) 
+        {
+            return await _context.Files
+                .Where(x => x.SpaceshipId == spaceshipId)
+                .Select(y => new ImageViewModel 
+                {
+                    ImageId = y.Id,
+                    FilePath = y.ExistingFilePath
+                }).ToListAsync();
         }
     }
 }

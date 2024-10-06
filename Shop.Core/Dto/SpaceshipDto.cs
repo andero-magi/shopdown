@@ -27,6 +27,7 @@ namespace Shop.Core.Dto
         public DateTime CreatedAt { get; set; }
         public DateTime LastUpdatedAt { get; set; }
 
+        public List<FileToApiDto> Images { get; set; }
 
         public SpaceshipDto() {}
 

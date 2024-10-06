@@ -10,6 +10,8 @@ namespace Shop.Core.ServiceInterface
 {
     public interface IFileService
     {
-        public Task FilesToApi(SpaceshipDto dto, Spaceship spaceship);
+        void FilesToApi(SpaceshipDto dto, Spaceship spaceship);
+
+        Task<List<FileToApi>?> RemoveImagesFromApi(FileToApiDto[] dtos);
     }
 }

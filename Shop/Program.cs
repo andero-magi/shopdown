@@ -20,7 +20,10 @@ namespace Shop
             // Add services to the container.
             builder.Services.AddDbContext<ShopContext>(options =>
             {
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+                options.UseSqlServer(
+                    builder.Configuration.GetConnectionString("DefaultConnection"),
+                    options => options.EnableRetryOnFailure()
+                );
             });
 
             var app = builder.Build();
@@ -38,10 +41,12 @@ namespace Shop
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+            var fileProviderPath = FileServices.EnsureDirectoryExists(app.Environment.ContentRootPath);
+
             app.UseStaticFiles(new StaticFileOptions()
             {
-                FileProvider = new PhysicalFileProvider(Path.Combine(builder.Environment.ContentRootPath, "multipleFileUpload")),
-                RequestPath = "/multipleFileUpload"
+                FileProvider = new PhysicalFileProvider(fileProviderPath),
+                RequestPath = "/" + FileServices.DIR_NAME
             });
 
             app.UseRouting();
@@ -70,6 +75,7 @@ namespace Shop
                 {
                     var logger = services.GetRequiredService<ILogger<Program>>();
                     logger.LogError(ex, "An error occurred while seeding the database.");
+                    throw;
                 }
             }
         }
