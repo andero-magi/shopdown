@@ -1,0 +1,46 @@
+﻿@model IEnumerable<Shop.Core.Domain.RealEstate>;
+@{
+    int rowNumber = 1;
+}
+
+<div>
+    <a asp-action="Create" asp-controller="Spaceship" type="submit" class="btn btn-primary">Create</a>
+</div>
+
+<div class="h1">
+    Spaceships
+</div>
+<form method="post">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Nr</th>
+                <th scope="col">Size</th>
+                <th scope="col">Room Number</th>
+                <th scope="col">Building Type</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{/* Comment :) */}
+
+            @foreach (var spaceships in Model)
+            {
+                // asdasd
+                <tr>
+                    <td>@rowNumber</td>
+                    <td>@spaceships.Size</td>
+                    <td>@spaceships.RoomNumber</td>
+                    <td>@spaceships.BuildingType</td>
+                    <td>
+                        <a asp-action="Details" asp-controller="RealEstate" asp-route-id="@spaceships.Id" class="btn btn-info">Details</a>
+                        <a asp-action="Update" asp-controller="RealEstate" asp-route-id="@spaceships.Id" class="btn btn-primary">Update</a>
+                        <a asp-action="Delete" asp-controller="RealEstate" asp-route-id="@spaceships.Id" class="btn btn-outline-danger">Delete</a>
+                    </td>
+                </tr>
+
+                rowNumber += 1;
+            }
+        </tbody>
+    </table>
+</form>

@@ -16,6 +16,7 @@ namespace Shop
             builder.Services.AddControllersWithViews();
             builder.Services.AddScoped<ISpaceshipServices, SpaceshipServices>();
             builder.Services.AddScoped<IFileService, FileServices>();
+            builder.Services.AddScoped<IRealEstateService, RealEstateService>();
 
             // Add services to the container.
             builder.Services.AddDbContext<ShopContext>(options =>
