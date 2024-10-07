@@ -13,4 +13,6 @@ public class RealEstate
     public int RoomNumber { get; set; }
     public string BuildingType { get; set; }
 
+    public DateTime CreationTime { get; set; }
+    public DateTime ModifiedTime { get; set; }
 }

@@ -1,4 +1,4 @@
-﻿@model Shop.Core.Dto.RealEstateDto;
+﻿@model Shop.Models.RealEstate.RealEstateUpdateViewModel;
 
 @{
     bool isCreate = (ViewData["IsCreate"] ?? "true").Equals("true");
@@ -9,37 +9,37 @@
 
 <div>
     <form method="post" enctype="multipart/form-data">
-        <input asp-for="Id" type="hidden"/>
+        <input asp-for="Dto.Id" type="hidden"/>
 
         <div class="form-group row">
-            <label asp-for="Size" class="col-sm-2 col-form-label"></label>
+            <label asp-for="Dto.Size" class="col-sm-2 col-form-label"></label>
             <div class="col-sm-10">
-                <input asp-for="Size" class="form-control"/>
+                <input asp-for="Dto.Size" class="form-control" />
             </div>
         </div>
 
         <div class="form-group row">
-            <label asp-for="RoomNumber" class="col-sm-2 col-form-label"></label>
+            <label asp-for="Dto.RoomNumber" class="col-sm-2 col-form-label"></label>
             <div class="col-sm-10">
-                <input asp-for="RoomNumber" class="form-control"/>
+                <input asp-for="Dto.RoomNumber" class="form-control" />
             </div>
         
         </div>
 
         <div class="form-group row">
-            <label asp-for="BuildingType" class="col-sm-2 col-form-label"></label>
+            <label asp-for="Dto.BuildingType" class="col-sm-2 col-form-label"></label>
             <div class="col-sm-10">
-                <input asp-for="BuildingType" class="form-control"/>
+                <input asp-for="Dto.BuildingType" class="form-control" />
             </div>
         </div>
 
         @if (isCreate)
         {
-            <input asp-action="Create" asp-controller="Spaceship" type="submit" class="btn btn-primary" value="Create" />
+            <input asp-action="Create" asp-controller="RealEstate" type="submit" class="btn btn-primary" value="Create" />
         } 
         else
         {
-            <input asp-action="Update" asp-controller="Spaceship" type="submit" class="btn btn-primary" value="Update" />
+            <input asp-action="Update" asp-controller="RealEstate" type="submit" class="btn btn-primary" value="Update" />
         }
     </form>
 </div>
