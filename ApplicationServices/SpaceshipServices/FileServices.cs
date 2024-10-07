@@ -32,7 +32,7 @@ namespace Shop.ApplicationServices.SpaceshipServices
         }
 
         public static string GetPath(string rootPath) {
-            return Path.Combine(rootPath, "/" + DIR_NAME + "/");
+            return Path.Combine(rootPath, DIR_NAME + "/");
         }
 
         async void IFileService.FilesToApi(SpaceshipDto dto, Spaceship spaceship)
