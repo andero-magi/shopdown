@@ -1,5 +1,6 @@
 ﻿namespace Shop.Core.Dto;
 
+using Microsoft.AspNetCore.Http;
 using Shop.Core.Domain;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,9 @@ public class RealEstateDto
     public double? Size { get; set; }
     public int? RoomNumber { get; set; }
     public string? BuildingType { get; set; }
+
+    public List<IFormFile> Files { get; set; }
+    public IEnumerable<FileToDbDto> Images { get; set; }
 
     public RealEstateDto()
     {
