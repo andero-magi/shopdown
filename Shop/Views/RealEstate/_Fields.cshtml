@@ -1,0 +1,23 @@
+﻿@model Shop.Models.RealEstate.RealEstateDetailsViewModel;
+
+
+<div>
+    <dl class="row">
+        <div class="form-group row">
+            <label asp-for="Estate.Id" class="col-sm-2 col-form-label"></label>
+            @Html.DisplayFor(m => m.Estate.Id)
+        </div>
+        <div class="form-group row">
+            <label asp-for="Estate.Size" class="col-sm-2 col-form-label"></label>
+            @Html.DisplayFor(m => m.Estate.Size)
+        </div>
+        <div class="form-group row">
+            <label asp-for="Estate.RoomNumber" class="col-sm-2 col-form-label"></label>
+            @Html.DisplayFor(m => m.Estate.RoomNumber)
+        </div>
+        <div class="form-group row">
+            <label asp-for="Estate.BuildingType" class="col-sm-2 col-form-label"></label>
+            @Html.DisplayFor(m => m.Estate.BuildingType)
+        </div>
+    </dl>
+</div>

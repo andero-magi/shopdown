@@ -1,7 +1,7 @@
 ﻿namespace Shop.Models.RealEstate
 {
-    public class RealEstateDeleteViewModel
+    public class RealEstateDeleteViewModel: RealEstateDetailsViewModel
     {
-        public Core.Domain.RealEstate Estate { get; set; }
+
     }
 }

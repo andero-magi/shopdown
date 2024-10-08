@@ -32,6 +32,9 @@ public class RealEstateController : Controller
             Dto = new RealEstateDto()
         };
 
+        vm.Dto.Files = [];
+        vm.Dto.Images = [];
+
         ViewData["IsCreate"] = "true";
         return View("CreateUpdate", vm);
     }
@@ -118,6 +121,11 @@ public class RealEstateController : Controller
             return NotFound();
         }
 
-        return View(estate);
+        var vm = new RealEstateDetailsViewModel()
+        {
+            Estate = estate
+        };
+
+        return View(vm);
     }
 }
