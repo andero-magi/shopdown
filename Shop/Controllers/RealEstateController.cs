@@ -90,6 +90,18 @@ public class RealEstateController : Controller
         return RedirectToAction(nameof(Update), new { id = removed.RealEstateId });
     }
 
+    public async Task<IActionResult> RemoveAllImages(Guid? guid)
+    {
+        var estate = await _service.GetAsync(guid);
+        if (estate == null)
+        {
+            return NotFound();
+        }
+
+        await _fileService.RemoveDbFiles(estate.Id);
+        return RedirectToAction(nameof(Index));
+    }
+
     public async Task<IActionResult> Update(Guid? id)
     {
         RealEstate? estate = await _service.GetAsync(id);

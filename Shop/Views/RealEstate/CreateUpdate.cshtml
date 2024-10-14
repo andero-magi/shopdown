@@ -45,6 +45,13 @@
             </div>
         </div>
 
+        @if (!isCreate && Model.Dto.Images.Any())
+        {
+            <a class="btn btn-danger" asp-controller="RealEstate" asp-action="RemoveAllImages" asp-route-guid="@Model.Dto.Id">
+                Clear Images
+            </a>
+        }
+
         <div>
             @foreach(var images in Model.Dto.Images)
             {
@@ -53,6 +60,8 @@
                 <a class="btn btn-danger" asp-controller="RealEstate" asp-action="RemoveImage" asp-route-imageId="@images.Id">Remove Image</a>
             }
         </div>
+
+        <hr />
 
         @if (isCreate)
         {
