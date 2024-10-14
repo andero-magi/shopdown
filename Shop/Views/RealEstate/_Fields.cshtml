@@ -19,6 +19,14 @@
             <label asp-for="Estate.BuildingType" class="col-sm-2 col-form-label"></label>
             @Html.DisplayFor(m => m.Estate.BuildingType)
         </div>
+        <div class="form-group row">
+            <label asp-for="Estate.ModifiedTime" class="col-sm-2 col-form-label"></label>
+            @Html.DisplayFor(m => m.Estate.ModifiedTime)
+        </div>
+        <div class="form-group row">
+            <label asp-for="Estate.CreationTime" class="col-sm-2 col-form-label"></label>
+            @Html.DisplayFor(m => m.Estate.CreationTime)
+        </div>
 
         <div>
             @foreach(var image in Model.Files)

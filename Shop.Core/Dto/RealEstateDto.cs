@@ -14,6 +14,9 @@ public class RealEstateDto
     public int? RoomNumber { get; set; }
     public string? BuildingType { get; set; }
 
+    public DateTime CreationTime { get; set; }
+    public DateTime ModifiedTime { get; set; }
+
     public List<IFormFile> Files { get; set; }
     public IEnumerable<FileToDbDto> Images { get; set; } = [];
 
@@ -28,6 +31,8 @@ public class RealEstateDto
         Size = estate.Size;
         RoomNumber = estate.RoomNumber;
         BuildingType = estate.BuildingType;
+        ModifiedTime = estate.ModifiedTime;
+        CreationTime = estate.CreationTime;
     }
 
     public void TransferTo(RealEstate estate)
@@ -36,5 +41,7 @@ public class RealEstateDto
         estate.Size = Size ?? 0.0d;
         estate.RoomNumber = RoomNumber ?? 0;
         estate.BuildingType = BuildingType!;
+        estate.CreationTime = CreationTime;
+        estate.ModifiedTime = ModifiedTime;
     }
 }

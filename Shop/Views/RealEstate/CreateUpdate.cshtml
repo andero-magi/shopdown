@@ -10,6 +10,8 @@
 <div>
     <form method="post" enctype="multipart/form-data">
         <input asp-for="Dto.Id" type="hidden"/>
+        <input asp-for="Dto.ModifiedTime" type="hidden"/>
+        <input asp-for="Dto.CreationTime" type="hidden"/>
 
         <div class="form-group row">
             <label asp-for="Dto.Size" class="col-sm-2 col-form-label"></label>
