@@ -4,6 +4,7 @@ using Shop.Core.Domain;
 using Shop.Core.Dto;
 using Shop.Core.ServiceInterface;
 using Shop.Data;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Shop.ApplicationServices.SpaceshipServices
 {
@@ -76,11 +77,25 @@ namespace Shop.ApplicationServices.SpaceshipServices
                 .ToListAsync();
         }
 
-        public async Task RemoveDbFiles(Guid guid)
+        public async Task RemoveDbFiles(Guid estateId)
         {
-            var result = await GetDatabaseFiles(guid);
+            var result = await GetDatabaseFiles(estateId);
             _context.DbFiles.RemoveRange(result);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<FileToDb?> RemoveImageById(Guid imageId)
+        {
+            var f = await GetDatabaseFile(imageId);
+            if (f == null)
+            {
+                return null;
+            }
+
+            _context.DbFiles.Remove(f);
+            await _context.SaveChangesAsync();
+
+            return f;
         }
 
         async void IFileService.FilesToApi(SpaceshipDto dto, Spaceship spaceship)

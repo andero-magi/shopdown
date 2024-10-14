@@ -70,6 +70,26 @@ public class RealEstateController : Controller
         return RedirectToAction("Index");
     }
 
+    public async Task<IActionResult> RemoveImage(Guid? imageId)
+    {
+        if (imageId == null)
+        {
+            return NotFound();
+        }
+
+        var removed = await _fileService.RemoveImageById((Guid) imageId);
+        if (removed == null)
+        {
+            return NotFound();
+        }
+        if (removed.RealEstateId == null)
+        {
+            return RedirectToAction(nameof(Index));
+        }
+
+        return RedirectToAction(nameof(Update), new { id = removed.RealEstateId });
+    }
+
     public async Task<IActionResult> Update(Guid? id)
     {
         RealEstate? estate = await _service.GetAsync(id);
