@@ -14,10 +14,12 @@ using System.Threading.Tasks;
 public class RealEstateService: IRealEstateService
 {
     private readonly ShopContext _context;
+    private readonly IFileService _fileService;
 
-    public RealEstateService(ShopContext context)
+    public RealEstateService(ShopContext context, IFileService fileService)
     {
         _context = context;
+        _fileService = fileService;
     }
 
     async Task<RealEstate?> IRealEstateService.GetAsync(Guid? guid)
@@ -39,6 +41,8 @@ public class RealEstateService: IRealEstateService
         estate.CreationTime = DateTime.Now;
         estate.ModifiedTime = DateTime.Now;
 
+        _fileService.FilesToDb(dto, estate);
+
         await _context.RealEstate.AddAsync(estate);
         await _context.SaveChangesAsync();
 
@@ -53,6 +57,7 @@ public class RealEstateService: IRealEstateService
             return null;
         }
 
+        await _fileService.RemoveDbFiles((Guid) guid);
         _context.RealEstate.Remove(found);
         await _context.SaveChangesAsync();
 
@@ -65,6 +70,8 @@ public class RealEstateService: IRealEstateService
         dto.TransferTo(estate);
 
         estate.ModifiedTime = DateTime.Now;
+
+        _fileService.FilesToDb(dto, estate);
 
         _context.RealEstate.Update(estate);
         await _context.SaveChangesAsync();

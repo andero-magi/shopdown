@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="multipleFileUpload\**" />
+    <Content Remove="multipleFileUpload\**" />
+    <EmbeddedResource Remove="multipleFileUpload\**" />
+    <None Remove="multipleFileUpload\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.8">
       <PrivateAssets>all</PrivateAssets>
@@ -23,10 +30,6 @@
     <ProjectReference Include="..\ApplicationServices\Shop.ApplicationServices.csproj" />
     <ProjectReference Include="..\Shop.Core\Shop.Core.csproj" />
     <ProjectReference Include="..\Shop.Data\Shop.Data.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="multipleFileUpload\" />
   </ItemGroup>
 
 </Project>

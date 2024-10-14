@@ -7,16 +7,34 @@ using Shop.Data;
 using Shop.Core.Domain;
 using Shop.Core.Dto;
 using Shop.Models.RealEstate;
+using Microsoft.AspNetCore.StaticFiles;
 
 public class RealEstateController : Controller
 {
-    private ShopContext _context;
-    private IRealEstateService _service;
+    private readonly ShopContext _context;
+    private readonly IRealEstateService _service;
+    private readonly IFileService _fileService;
 
-    public RealEstateController(ShopContext ctx, IRealEstateService service)
+    public RealEstateController(ShopContext ctx, IRealEstateService service, IFileService fileService)
     {
         _context = ctx;
         _service = service;
+        _fileService = fileService;
+    }
+
+    [Route("RealEstate/asset/{imageId}")]
+    [ActionName("asset")]
+    public async Task<IActionResult> GetFile([FromRoute] Guid imageId)
+    {
+        var file = await _fileService.GetDatabaseFile(imageId);
+        if (file == null)
+        {
+            return NotFound();
+        }
+
+        new FileExtensionContentTypeProvider().TryGetContentType(file.ImageTitle, out string? contentType);
+
+        return File(file.ImageData, contentType);
     }
 
     public async Task<IActionResult> Index()
@@ -66,6 +84,10 @@ public class RealEstateController : Controller
             Dto = new RealEstateDto(estate)
         };
 
+        vm.Dto.Files = [];
+        vm.Dto.Images = (await _fileService.GetDatabaseFiles(estate.Id))
+            .Select(x => new FileToDbDto(x));
+        
         ViewData["IsCreate"] = "false";
         return View("CreateUpdate", vm);
     }
@@ -93,7 +115,8 @@ public class RealEstateController : Controller
 
         RealEstateDeleteViewModel vm = new()
         {
-            Estate = found
+            Estate = found,
+            Files = await _fileService.GetDatabaseFiles((Guid) id)
         };
 
         return View(vm);
@@ -121,9 +144,12 @@ public class RealEstateController : Controller
             return NotFound();
         }
 
+        List<FileToDb> images = await _fileService.GetDatabaseFiles((Guid) id);
+
         var vm = new RealEstateDetailsViewModel()
         {
-            Estate = estate
+            Estate = estate,
+            Files = images
         };
 
         return View(vm);

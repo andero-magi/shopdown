@@ -33,6 +33,24 @@
             </div>
         </div>
 
+
+        <div class="form-group row">
+            <label asp-for="Dto.Files" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-5">
+                <div class="custom-file">
+                    <input class="form-control custom-file-input" asp-for="Dto.Files" multiple type="file" />
+                </div>
+            </div>
+        </div>
+
+        <div>
+            @foreach(var images in Model.Dto.Images)
+            {
+                var m = new Shop.Models.RealEstate.DbFileViewModel(images);
+                <partial name="_Image" model="m"/>
+            }
+        </div>
+
         @if (isCreate)
         {
             <input asp-action="Create" asp-controller="RealEstate" type="submit" class="btn btn-primary" value="Create" />

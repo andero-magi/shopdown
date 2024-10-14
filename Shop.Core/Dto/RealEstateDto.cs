@@ -15,7 +15,7 @@ public class RealEstateDto
     public string? BuildingType { get; set; }
 
     public List<IFormFile> Files { get; set; }
-    public IEnumerable<FileToDbDto> Images { get; set; }
+    public IEnumerable<FileToDbDto> Images { get; set; } = [];
 
     public RealEstateDto()
     {

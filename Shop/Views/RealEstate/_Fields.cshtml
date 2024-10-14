@@ -19,5 +19,13 @@
             <label asp-for="Estate.BuildingType" class="col-sm-2 col-form-label"></label>
             @Html.DisplayFor(m => m.Estate.BuildingType)
         </div>
+
+        <div>
+            @foreach(var image in Model.Files)
+            {
+                var m = new Shop.Models.RealEstate.DbFileViewModel(image);
+                <partial name="_Image" model="m"/>
+            }
+        </div>
     </dl>
 </div>

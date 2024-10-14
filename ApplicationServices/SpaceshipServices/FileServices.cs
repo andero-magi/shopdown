@@ -35,6 +35,54 @@ namespace Shop.ApplicationServices.SpaceshipServices
             return Path.Combine(rootPath, DIR_NAME + "\\");
         }
 
+        public void FilesToDb(RealEstateDto dto, RealEstate estate)
+        {
+            if (dto.Files == null || dto.Files.Count < 1)
+            {
+                return;
+            }
+
+            foreach (var image in dto.Files)
+            {
+                using (var target = new MemoryStream())
+                {
+                    FileToDb db = new()
+                    {
+                        Id = Guid.NewGuid(),
+                        ImageTitle = image.FileName,
+                        RealEstateId = estate.Id
+                    };
+
+                    image.CopyTo(target);
+                    db.ImageData = target.ToArray();
+
+                    _context.DbFiles.Add(db);
+                }
+            }
+
+            _context.SaveChanges();
+        }
+
+        public async Task<FileToDb?> GetDatabaseFile(Guid imageId)
+        {
+            return await _context.DbFiles
+                .FirstOrDefaultAsync(x => x.Id == imageId);
+        }
+
+        public async Task<List<FileToDb>> GetDatabaseFiles(Guid estateId)
+        {
+            return await _context.DbFiles
+                .Where(x =>  x.RealEstateId == estateId)
+                .ToListAsync();
+        }
+
+        public async Task RemoveDbFiles(Guid guid)
+        {
+            var result = await GetDatabaseFiles(guid);
+            _context.DbFiles.RemoveRange(result);
+            await _context.SaveChangesAsync();
+        }
+
         async void IFileService.FilesToApi(SpaceshipDto dto, Spaceship spaceship)
         {
             var path = EnsureDirectoryExists(_webHost.ContentRootPath);
@@ -85,5 +133,7 @@ namespace Shop.ApplicationServices.SpaceshipServices
             await _context.SaveChangesAsync();
             return null;
         }
+
+
     }
 }
