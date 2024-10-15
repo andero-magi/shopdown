@@ -24,7 +24,7 @@ public class RealEstateController : Controller
 
     [Route("RealEstate/asset/{imageId}")]
     [ActionName("asset")]
-    public async Task<IActionResult> GetFile([FromRoute] Guid imageId)
+    public async Task<IActionResult> GetFile(Guid imageId)
     {
         var file = await _fileService.GetDatabaseFile(imageId);
         if (file == null)

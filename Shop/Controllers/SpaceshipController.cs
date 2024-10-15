@@ -158,6 +158,10 @@ namespace Shop.Controllers
             {
                 return NotFound();
             }
+            if (ModelState.IsValid)
+            {
+                return BadRequest();
+            }
 
             var result = await _services.Create(vm.Dto);
             return RedirectToAction(nameof(Index));

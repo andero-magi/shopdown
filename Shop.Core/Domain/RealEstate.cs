@@ -11,7 +11,7 @@ public class RealEstate
     public Guid Id { get; set; }
     public double Size { get; set; }
     public int RoomNumber { get; set; }
-    public string BuildingType { get; set; }
+    public string? BuildingType { get; set; }
 
     public DateTime CreationTime { get; set; }
     public DateTime ModifiedTime { get; set; }

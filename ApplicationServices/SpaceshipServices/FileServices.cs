@@ -102,6 +102,11 @@ namespace Shop.ApplicationServices.SpaceshipServices
         {
             var path = EnsureDirectoryExists(_webHost.ContentRootPath);
 
+            if (dto.Files == null || dto.Files.Count < 1)
+            {
+                return;
+            }
+
             foreach (var file in dto.Files)
             {
                 String uniqueFileName = Guid.NewGuid().ToString() + "-" + file.FileName;
