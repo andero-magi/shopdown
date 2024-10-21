@@ -3,9 +3,12 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Shop.ApplicationServices.SpaceshipServices;
 using Shop.Core.ServiceInterface;
 using Shop.Data;
+using Shop.RealEstateTest.Macros;
+using Shop.RealEstateTest.Mock;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,6 +34,8 @@ public abstract class TestBase
     public virtual void SetupServices(IServiceCollection services)
     {
         services.AddScoped<IRealEstateService, RealEstateService>();
+        services.AddScoped<IFileService, FileServices>();
+        services.AddScoped<IHostEnvironment, MockHostEnvironment>();
 
         services.AddDbContext<ShopContext>(x =>
         {
