@@ -75,6 +75,30 @@ namespace Shop.Data
                 context.Kindergartens.AddRange(kindergartens);
                 context.SaveChanges();
             }
+
+            if (!context.RealEstate.Any())
+            {
+                var estaes = new RealEstate[]
+                {
+                    new()
+                    {
+                        Id = Guid.NewGuid(),
+                        Size = 14.0d,
+                        RoomNumber = 0,
+                        BuildingType = "Apartment"
+                    },
+                    new()
+                    {
+                        Id = Guid.NewGuid(),
+                        Size = 28.0d,
+                        RoomNumber = 14,
+                        BuildingType = "Warehouse"
+                    }
+                };
+
+                context.RealEstate.AddRange(estaes);
+                context.SaveChanges();
+            }
         }
     }
 }

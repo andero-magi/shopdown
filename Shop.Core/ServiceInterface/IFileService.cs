@@ -13,5 +13,12 @@ namespace Shop.Core.ServiceInterface
         void FilesToApi(SpaceshipDto dto, Spaceship spaceship);
 
         Task<List<FileToApi>?> RemoveImagesFromApi(FileToApiDto[] dtos);
+
+        void FilesToDb(RealEstateDto dto, RealEstate estate);
+
+        Task<FileToDb?> GetDatabaseFile(Guid imageId);
+        Task RemoveDbFiles(Guid estateId);
+        Task<FileToDb?> RemoveImageById(Guid imageId);
+        Task<List<FileToDb>> GetDatabaseFiles(Guid estateId);
     }
 }

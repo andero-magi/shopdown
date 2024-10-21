@@ -12,9 +12,9 @@ namespace Shop.Core.Dto
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public string Typename { get; set; }
+        public string? Typename { get; set; }
 
-        public string SpaceshipModel { get; set; }
+        public string? SpaceshipModel { get; set; }
 
         public DateTime BuildDate { get; set; }
 
