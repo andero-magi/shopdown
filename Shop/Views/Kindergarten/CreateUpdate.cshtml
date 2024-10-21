@@ -49,7 +49,7 @@
         </div>
     </div>
 
-    @if (!isCreate && Model.Dto.Images.Any())
+    @if (!isCreate && Model.Images.Any())
     {
         <a class="btn btn-danger" asp-controller="Kindergarten" asp-action="RemoveAllImages" asp-route-guid="@Model.Dto.Id">
             Clear Images
