@@ -3,7 +3,6 @@ using Shop.Core.Domain;
 
 namespace Shop.Models.Kindergartens;
 
-public class KindergartenDeleteViewModel
+public class KindergartenDeleteViewModel: KindergartenDetailsViewModel
 {
-  public Kindergarten Kindergarten { get; set; }
 }

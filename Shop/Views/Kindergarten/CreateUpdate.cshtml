@@ -40,6 +40,31 @@
         </div>
     </div>
 
+    <div class="form-group row">
+        <label asp-for="Dto.Files" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-5">
+            <div class="custom-file">
+                <input class="form-control custom-file-input" asp-for="Dto.Files" multiple type="file" />
+            </div>
+        </div>
+    </div>
+
+    @if (!isCreate && Model.Dto.Images.Any())
+    {
+        <a class="btn btn-danger" asp-controller="Kindergarten" asp-action="RemoveAllImages" asp-route-guid="@Model.Dto.Id">
+            Clear Images
+        </a>
+    }
+
+    @foreach (var img in Model.Images)
+    {
+        var model = new Shop.Models.DbFileViewModel(img);
+        <partial name="_Image" model="model"/>
+        <a class="btn btn-danger" asp-controller="Kindergarten" asp-action="RemoveImage" asp-route-imageId="@img.Id">Remove Image</a>
+    }
+
+    <hr/>
+
     @if (isCreate)
     {
         <input asp-action="Create" asp-controller="Kindergarten" type="submit" class="btn btn-primary" value="Create"/>

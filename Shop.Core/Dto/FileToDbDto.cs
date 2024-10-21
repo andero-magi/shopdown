@@ -13,7 +13,7 @@ public class FileToDbDto
     public Guid Id { get; set; }
     public string ImageTitle { get; set; }
     public byte[] ImageData { get; set; }
-    public Guid? RealEstateId { get; set; }
+    public Guid? HolderId { get; set; }
 
     public FileToDbDto()
     {
@@ -25,6 +25,6 @@ public class FileToDbDto
         Id = db.Id;
         ImageTitle = db.ImageTitle;
         ImageData = db.ImageData;
-        RealEstateId = db.RealEstateId;
+        HolderId = db.HolderId;
     }
 }

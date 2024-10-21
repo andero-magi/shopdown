@@ -36,7 +36,7 @@ namespace Shop.ApplicationServices.SpaceshipServices
             return Path.Combine(rootPath, DIR_NAME + "\\");
         }
 
-        public void FilesToDb(RealEstateDto dto, RealEstate estate)
+        public void FilesToDb(DbFilesHolder dto, Guid holderId)
         {
             if (dto.Files == null || dto.Files.Count < 1)
             {
@@ -51,7 +51,7 @@ namespace Shop.ApplicationServices.SpaceshipServices
                     {
                         Id = Guid.NewGuid(),
                         ImageTitle = image.FileName,
-                        RealEstateId = estate.Id
+                        HolderId = holderId
                     };
 
                     image.CopyTo(target);
@@ -73,7 +73,7 @@ namespace Shop.ApplicationServices.SpaceshipServices
         public async Task<List<FileToDb>> GetDatabaseFiles(Guid estateId)
         {
             return await _context.DbFiles
-                .Where(x =>  x.RealEstateId == estateId)
+                .Where(x =>  x.HolderId == estateId)
                 .ToListAsync();
         }
 

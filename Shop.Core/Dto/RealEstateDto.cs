@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-public class RealEstateDto
+public class RealEstateDto: DbFilesHolder
 {
     public Guid? Id { get; set; }
     public double? Size { get; set; }
@@ -16,9 +16,6 @@ public class RealEstateDto
 
     public DateTime CreationTime { get; set; }
     public DateTime ModifiedTime { get; set; }
-
-    public List<IFormFile> Files { get; set; }
-    public IEnumerable<FileToDbDto> Images { get; set; } = [];
 
     public RealEstateDto()
     {

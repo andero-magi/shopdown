@@ -1,42 +1,50 @@
-﻿@model Shop.Core.Domain.Kindergarten;
+﻿@model Shop.Models.Kindergartens.KindergartenDetailsViewModel;
 
 <div>
     <h4>Kindergarten</h4>
     <hr />
     <dl class="row">
         <div class="form-group row">
-            <label asp-for="Id" class="col-sm-2 col-form-label"></label>
-            @Html.DisplayFor(m => m.Id)
+            <label asp-for="Kindergarten.Id" class="col-sm-2 col-form-label"></label>
+            @Html.DisplayFor(m => m.Kindergarten.Id)
         </div>
 
         <div class="form-group row">
-            <label asp-for="GroupName" class="col-sm-2 col-form-label"></label>
-            @Html.DisplayFor(m => m.GroupName)
+            <label asp-for="Kindergarten.GroupName" class="col-sm-2 col-form-label"></label>
+            @Html.DisplayFor(m => m.Kindergarten.GroupName)
         </div>
 
         <div class="form-group row">
-            <label asp-for="ChildrenCount" class="col-sm-2 col-form-label"></label>
-            @Html.DisplayFor(m => m.ChildrenCount)
+            <label asp-for="Kindergarten.ChildrenCount" class="col-sm-2 col-form-label"></label>
+            @Html.DisplayFor(m => m.Kindergarten.ChildrenCount)
         </div>
 
         <div class="form-group row">
-            <label asp-for="KindergartenName" class="col-sm-2 col-form-label"></label>
-            @Html.DisplayFor(m => m.KindergartenName)
+            <label asp-for="Kindergarten.KindergartenName" class="col-sm-2 col-form-label"></label>
+            @Html.DisplayFor(m => m.Kindergarten.KindergartenName)
         </div>
 
         <div class="form-group row">
-            <label asp-for="Teacher" class="col-sm-2 col-form-label"></label>
-            @Html.DisplayFor(m => m.Teacher)
+            <label asp-for="Kindergarten.Teacher" class="col-sm-2 col-form-label"></label>
+            @Html.DisplayFor(m => m.Kindergarten.Teacher)
         </div>
 
         <div class="form-group row">
-            <label asp-for="CreationDate" class="col-sm-2 col-form-label"></label>
-            @Html.DisplayFor(m => m.CreationDate)
+            <label asp-for="Kindergarten.CreationDate" class="col-sm-2 col-form-label"></label>
+            @Html.DisplayFor(m => m.Kindergarten.CreationDate)
         </div>
 
         <div class="form-group row">
-            <label asp-for="LastUpdateDate" class="col-sm-2 col-form-label"></label>
-            @Html.DisplayFor(m => m.LastUpdateDate)
+            <label asp-for="Kindergarten.LastUpdateDate" class="col-sm-2 col-form-label"></label>
+            @Html.DisplayFor(m => m.Kindergarten.LastUpdateDate)
+        </div>
+
+        <div>
+            @foreach (var image in Model.Images)
+            {
+                var m = new Shop.Models.DbFileViewModel(image);
+                <partial name="_Image" model="m" />
+            }
         </div>
     </dl>
 </div>

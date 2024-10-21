@@ -55,7 +55,7 @@
         <div>
             @foreach(var images in Model.Dto.Images)
             {
-                var m = new Shop.Models.RealEstate.DbFileViewModel(images);
+                var m = new Shop.Models.DbFileViewModel(images);
                 <partial name="_Image" model="m"/>
                 <a class="btn btn-danger" asp-controller="RealEstate" asp-action="RemoveImage" asp-route-imageId="@images.Id">Remove Image</a>
             }

@@ -10,10 +10,12 @@ namespace Shop.ApplicationServices.SpaceshipServices;
 public class KindergartenService: IKindergartenService
 {
     private readonly ShopContext _context;
+    private readonly IFileService _files;
 
-    public KindergartenService(ShopContext context)
+    public KindergartenService(ShopContext context, IFileService service)
     {
         _context = context;
+        _files = service;
     }
 
     public async Task<Kindergarten> CreateAsync(KindergartenDto dto)
@@ -24,6 +26,8 @@ public class KindergartenService: IKindergartenService
         k.Id = Guid.NewGuid();
         k.CreationDate = DateTime.Now;
         k.LastUpdateDate = DateTime.Now;
+
+        _files.FilesToDb(dto, k.Id);
 
         await _context.Kindergartens.AddAsync(k);
         await _context.SaveChangesAsync();
@@ -39,6 +43,8 @@ public class KindergartenService: IKindergartenService
         {
             return null;
         }
+
+        await _files.RemoveDbFiles(k.Id);
 
         _context.Kindergartens.Remove(k);
         await _context.SaveChangesAsync();
@@ -62,6 +68,8 @@ public class KindergartenService: IKindergartenService
 
         dto.TransferTo(k);
         k.LastUpdateDate = DateTime.Now;
+
+        _files.FilesToDb(dto, k.Id);
 
         _context.Kindergartens.Update(k);
         await _context.SaveChangesAsync();

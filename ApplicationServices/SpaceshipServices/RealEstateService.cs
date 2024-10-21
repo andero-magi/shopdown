@@ -41,7 +41,7 @@ public class RealEstateService: IRealEstateService
         estate.CreationTime = DateTime.Now;
         estate.ModifiedTime = DateTime.Now;
 
-        _fileService.FilesToDb(dto, estate);
+        _fileService.FilesToDb(dto, estate.Id);
 
         await _context.RealEstate.AddAsync(estate);
         await _context.SaveChangesAsync();
@@ -71,7 +71,7 @@ public class RealEstateService: IRealEstateService
 
         estate.ModifiedTime = DateTime.Now;
 
-        _fileService.FilesToDb(dto, estate);
+        _fileService.FilesToDb(dto, estate.Id);
 
         _context.RealEstate.Update(estate);
         await _context.SaveChangesAsync();

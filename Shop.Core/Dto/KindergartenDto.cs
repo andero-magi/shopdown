@@ -3,7 +3,7 @@ using Shop.Core.Domain;
 
 namespace Shop.Core.Dto;
 
-public class KindergartenDto
+public class KindergartenDto: DbFilesHolder
 {
     public Guid Id { get; set; }
     public string GroupName { get; set; }

@@ -31,7 +31,7 @@
         <div>
             @foreach(var image in Model.Files)
             {
-                var m = new Shop.Models.RealEstate.DbFileViewModel(image);
+                var m = new Shop.Models.DbFileViewModel(image);
                 <partial name="_Image" model="m"/>
             }
         </div>

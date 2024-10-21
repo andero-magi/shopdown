@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Shop.ApplicationServices.SpaceshipServices;
 using Shop.Core.Domain;
 using Shop.Core.Dto;
 using Shop.Core.ServiceInterface;
@@ -12,11 +13,13 @@ public class KindergartenController : Controller
 {
     private readonly ShopContext _context;
     private readonly IKindergartenService _kindergartens;
+    private readonly IFileService _files;
 
-    public KindergartenController(ShopContext context, IKindergartenService service)
+    public KindergartenController(ShopContext context, IKindergartenService service, IFileService files)
     {
         _context = context;
         _kindergartens = service;
+        _files = files;
     }
 
     public async Task<IActionResult> Index() 
@@ -26,6 +29,38 @@ public class KindergartenController : Controller
             .ToListAsync();
 
         return View(model);
+    }
+
+    public async Task<IActionResult> RemoveAllImages(Guid? guid)
+    {
+        var kindergarten = await _kindergartens.GetKindergartenAsync(guid);
+        if (kindergarten == null)
+        {
+            return NotFound();
+        }
+
+        await _files.RemoveDbFiles(kindergarten.Id);
+        return RedirectToAction(nameof(Update), new { guid = kindergarten.Id });
+    }
+
+    public async Task<IActionResult> RemoveImage(Guid? imageId)
+    {
+        if (imageId == null)
+        {
+            return NotFound();
+        }
+
+        var removed = await _files.RemoveImageById((Guid)imageId);
+        if (removed == null)
+        {
+            return NotFound();
+        }
+        if (removed.HolderId == null)
+        {
+            return RedirectToAction(nameof(Index));
+        }
+
+        return RedirectToAction(nameof(Update), new { guid = removed.HolderId });
     }
 
     public async Task<IActionResult> Delete(Guid? guid)
@@ -38,7 +73,8 @@ public class KindergartenController : Controller
 
         KindergartenDeleteViewModel vm = new()
         {
-            Kindergarten = kindergarten
+            Kindergarten = kindergarten,
+            Images = await _files.GetDatabaseFiles(kindergarten.Id)
         };
 
         return View(vm);
@@ -65,7 +101,13 @@ public class KindergartenController : Controller
             return NotFound();
         }
 
-        return View(new KindergartenDetailsViewModel() {Kindergarten = kindergarten});
+        var vm = new KindergartenDetailsViewModel() 
+        { 
+            Kindergarten = kindergarten,
+            Images = await _files.GetDatabaseFiles(kindergarten.Id)
+        };
+
+        return View(vm);
     }
 
     public async Task<IActionResult> Update(Guid? guid) 
@@ -80,7 +122,8 @@ public class KindergartenController : Controller
 
         KindergartenUpdateViewModel vm = new()
         {
-            Dto = new KindergartenDto(kindergarten)
+            Dto = new KindergartenDto(kindergarten),
+            Images = await _files.GetDatabaseFiles(kindergarten.Id)
         };
 
         return View("CreateUpdate", vm);

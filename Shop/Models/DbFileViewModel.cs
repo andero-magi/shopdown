@@ -1,7 +1,7 @@
 ﻿using Shop.Core.Domain;
 using Shop.Core.Dto;
 
-namespace Shop.Models.RealEstate;
+namespace Shop.Models;
 
 public class DbFileViewModel
 {
@@ -10,7 +10,7 @@ public class DbFileViewModel
 
     public DbFileViewModel()
     {
-        
+
     }
 
     public DbFileViewModel(FileToDb db)

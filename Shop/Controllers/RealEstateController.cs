@@ -82,12 +82,12 @@ public class RealEstateController : Controller
         {
             return NotFound();
         }
-        if (removed.RealEstateId == null)
+        if (removed.HolderId == null)
         {
             return RedirectToAction(nameof(Index));
         }
 
-        return RedirectToAction(nameof(Update), new { id = removed.RealEstateId });
+        return RedirectToAction(nameof(Update), new { id = removed.HolderId });
     }
 
     public async Task<IActionResult> RemoveAllImages(Guid? guid)
