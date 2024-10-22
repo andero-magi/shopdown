@@ -85,6 +85,72 @@ public class RealEstateTest: TestBase
         Assert.Equal(result.Id, r2.Id);
     }
 
+    [Fact]
+    public async Task Should_UpdateRealEstate_WhenUpdateData()
+    {
+        var guid = Guid.NewGuid();
+        RealEstateDto dto = MockRealEstateData();
+
+        RealEstate estate = new()
+        {
+            Id = guid,
+            Size = 100,
+            RoomNumber = 2,
+            BuildingType = "Apartments",
+            CreationTime = DateTime.Now,
+            ModifiedTime = DateTime.Now,
+        };
+
+        var s = Svc<IRealEstateService>();
+
+        await s.Update(dto);
+
+
+
+
+    }
+
+    [Fact]
+    public async Task ShouldNot_UpdateRealEstate_WhenDidNotUpdateData()
+    {
+        var dto = MockRealEstateData();
+        var s = Svc<IRealEstateService>();
+
+        var made = await s.Create(dto);
+
+        var nullUpdate = MockRealEstateData();
+        var result = await s.Update(nullUpdate);
+
+        Assert.NotEqual(made.Id, result.Id);
+
+    }
+
+    [Fact]
+    public async Task ShouldNot_UpdateRealEstate_WhenUpdateAlreadyHappening()
+    {
+        var dto = MockRealEstateData();
+        var s = Svc<IRealEstateService>();
+
+        double originalSize = (double) dto.Size;
+        int originalRoomNo = (int) dto.RoomNumber;
+
+        var made = await s.Create(dto);
+        made.RoomNumber = 424242;
+
+        dto.Id = made.Id;
+        dto.Size = -1000;
+
+        var task1 = s.Update(dto);
+
+
+        Assert.ThrowsAsync<InvalidOperationException>(async () =>
+        {
+            dto.RoomNumber = -1;
+            var task2 = s.Update(dto);
+            await task2;
+        });
+    }
+
     private RealEstateDto MockRealEstateData()
     {
         return new()
