@@ -85,14 +85,18 @@ namespace Shop.Data
                         Id = Guid.NewGuid(),
                         Size = 14.0d,
                         RoomNumber = 0,
-                        BuildingType = "Apartment"
+                        BuildingType = "Apartment",
+                        CreationTime = DateTime.Now,
+                        ModifiedTime = DateTime.Now,
                     },
                     new()
                     {
                         Id = Guid.NewGuid(),
                         Size = 28.0d,
                         RoomNumber = 14,
-                        BuildingType = "Warehouse"
+                        BuildingType = "Warehouse",
+                        CreationTime = DateTime.Now,
+                        ModifiedTime = DateTime.Now,
                     }
                 };
 
