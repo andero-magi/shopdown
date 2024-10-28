@@ -34,6 +34,7 @@ public abstract class TestBase
     public virtual void SetupServices(IServiceCollection services)
     {
         services.AddScoped<IRealEstateService, RealEstateService>();
+        services.AddScoped<IKindergartenService, KindergartenService>();
         services.AddScoped<IFileService, FileServices>();
         services.AddScoped<IHostEnvironment, MockHostEnvironment>();
 
