@@ -1,7 +1,10 @@
 ﻿@model Shop.Models.Spaceships.SpaceshipDetailViewModel;
 
+<h6 class="mb-4">
+    Details
+</h6>
+
 <div>
-    <h4>Spaceships</h4>
     <dl class="row">
         <div class="form-group row">
             <label asp-for="Ship.Id" class="col-sm-2 col-form-label"></label>
@@ -42,7 +45,9 @@
 
         @foreach(var image in Model.Images) 
         {
-            <partial name="_Images" model="image"/>
+            <div class="offset-2">
+                <partial name="_Images" model="image" />
+            </div>
         }
     </dl>
 </div>

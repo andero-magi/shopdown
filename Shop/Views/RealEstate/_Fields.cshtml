@@ -32,7 +32,9 @@
             @foreach(var image in Model.Files)
             {
                 var m = new Shop.Models.RealEstate.DbFileViewModel(image);
-                <partial name="_Image" model="m"/>
+                <div class="offset-2">
+                    <partial name="_Image" model="m" />
+                </div>
             }
         </div>
     </dl>

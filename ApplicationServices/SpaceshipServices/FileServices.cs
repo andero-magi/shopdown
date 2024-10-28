@@ -120,7 +120,7 @@ namespace Shop.ApplicationServices.SpaceshipServices
                 FileToApi fileToApi = new()
                 {
                     Id = Guid.NewGuid(),
-                    ExistingFilePath = filePath,
+                    ExistingFilePath = $"/{DIR_NAME}/{uniqueFileName}",
                     SpaceshipId = spaceship.Id,
                 };
 

@@ -1,10 +1,10 @@
 ﻿@model Shop.Models.Spaceships.SpaceshipDeleteViewModel;
 
-<h1>Delete</h1>
+<h6 class="mb-4">
+    Delete
+</h6>
 
 <div>
-    <h4>Spaceships</h4>
-    <hr />
     <dl class="row">
         <div class="form-group row">
             <label asp-for="Ship.Id" class="col-sm-2 col-form-label"></label>
@@ -72,7 +72,9 @@
         <div class="form-group row">
             @foreach (var images in Model.Images)
             {
-                <partial name="_Images" model="images" />
+                <div class="offset-2">
+                    <partial name="_Images" model="images" />
+                </div>
             }
         </div>
     </dl>

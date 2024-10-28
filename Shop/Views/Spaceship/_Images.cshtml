@@ -1,10 +1,6 @@
 ﻿@model Shop.Models.Spaceships.ImageViewModel;
 
-@{
-    var photoPaths = "~/multipleFileUpload/" + (Model.FilePath ?? "noimage.jpg");
-}
-
-<div class="form-group row col-sm-4 offset-2">
+<div class="form-group row p-4 bg-dark rounded mb-4 modal-open-image" style="max-width: 33vw;">
     <div>@Model.FilePath</div>
     <img class="card-image-top" src="@Model.FilePath" asp-append-version="true" />
 </div>
