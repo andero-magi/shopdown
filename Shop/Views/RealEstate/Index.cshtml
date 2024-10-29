@@ -3,6 +3,9 @@
     int rowNumber = 1;
 }
 
+
+<div class="bg-secondary rounded h-100 p-4">
+
 <h6 class="mb-4">Real Estate</h6>
 
 <div>
@@ -13,7 +16,7 @@
     <table class="table table-hover">
         <thead>
             <tr>
-                <th scope="col">Nr</th>
+                <th scope="col" class="fw-bold">#</th>
                 <th scope="col">Size</th>
                 <th scope="col">Room Number</th>
                 <th scope="col">Building Type</th>
@@ -32,9 +35,15 @@
                     <td>@spaceships.RoomNumber</td>
                     <td>@spaceships.BuildingType</td>
                     <td>
-                        <a asp-action="Details" asp-controller="RealEstate" asp-route-id="@spaceships.Id" class="btn btn-info">Details</a>
-                        <a asp-action="Update" asp-controller="RealEstate" asp-route-id="@spaceships.Id" class="btn btn-primary">Update</a>
-                        <a asp-action="Delete" asp-controller="RealEstate" asp-route-id="@spaceships.Id" class="btn btn-outline-danger">Delete</a>
+                        <a asp-action="Details" asp-controller="RealEstate" asp-route-id="@spaceships.Id" class="btn btn-outline-info">
+                            <i class="bi bi-eye-fill"></i>
+                        </a>
+                        <a asp-action="Update" asp-controller="RealEstate" asp-route-id="@spaceships.Id" class="btn btn-outline-primary">
+                            <i class="bi bi-pencil-fill"></i>
+                        </a>
+                        <a asp-action="Delete" asp-controller="RealEstate" asp-route-id="@spaceships.Id" class="btn btn-outline-danger">
+                            <i class="bi bi-trash-fill"></i>
+                        </a>
                     </td>
                 </tr>
 
@@ -43,3 +52,5 @@
         </tbody>
     </table>
 </form>
+
+</div>

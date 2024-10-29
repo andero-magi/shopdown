@@ -1,7 +1,8 @@
 ﻿@model Shop.Models.RealEstate.RealEstateDetailsViewModel;
 
+<div class="bg-secondary rounded h-100 p-4">
+    <h6 class="mb-4">@ViewData["Title"]</h6>
 
-<div>
     <dl class="row">
         <div class="form-group row">
             <label asp-for="Estate.Id" class="col-sm-2 col-form-label"></label>
@@ -27,15 +28,20 @@
             <label asp-for="Estate.CreationTime" class="col-sm-2 col-form-label"></label>
             @Html.DisplayFor(m => m.Estate.CreationTime)
         </div>
-
-        <div>
-            @foreach(var image in Model.Files)
-            {
-                var m = new Shop.Models.RealEstate.DbFileViewModel(image);
-                <div class="offset-2">
-                    <partial name="_Image" model="m" />
-                </div>
-            }
-        </div>
     </dl>
 </div>
+
+@if (Model.Files.Any())
+{
+    <div class="bg-secondary rounded h-100 p-4 mt-4">
+        <h6 class="mb-4">Images</h6>
+
+        @foreach (var image in Model.Files)
+        {
+            var m = new Shop.Models.RealEstate.DbFileViewModel(image);
+            <div class="offset-2">
+                <partial name="_Image" model="m" />
+            </div>
+        }
+    </div>
+}

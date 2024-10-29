@@ -1,10 +1,9 @@
 ﻿@model Shop.Models.Spaceships.SpaceshipDetailViewModel;
 
-<h6 class="mb-4">
-    Details
-</h6>
 
-<div>
+<div class="bg-secondary rounded h-100 p-4">
+    <h6 class="mb-4">Details</h6>
+
     <dl class="row">
         <div class="form-group row">
             <label asp-for="Ship.Id" class="col-sm-2 col-form-label"></label>
@@ -50,4 +49,8 @@
             </div>
         }
     </dl>
+</div>
+
+<div class="bg-secondary rounded h-100 p-4 mt-4">
+    <a asp-action="Index" asp-controller="Spaceship" class="btn btn-success">Back</a>
 </div>

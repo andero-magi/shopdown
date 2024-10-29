@@ -4,14 +4,12 @@
     ViewData["Title"] = "Delete Real Estate";
 }
 
-<h6 class="mb-4">@ViewData["Title"]</h6>
-
 <partial name="_Fields" model="Model" />
 
-<hr />
-
-<form asp-action="Delete" asp-controller="RealEstate" method="post">
-    <input type="hidden" asp-for="Estate.Id" />
-    <input type="submit" value="Delete" class="btn btn-danger"/>
-    <a asp-action="Index" asp-controller="RealEstate" class="btn btn-success">Back</a>
-</form>
+<div class="bg-secondary rounded h-100 p-4 mt-4">
+    <form asp-action="Delete" asp-controller="RealEstate" method="post">
+        <input type="hidden" asp-for="Estate.Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" />
+        <a asp-action="Index" asp-controller="RealEstate" class="btn btn-success">Back</a>
+    </form>
+</div>

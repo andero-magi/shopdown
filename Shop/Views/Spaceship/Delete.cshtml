@@ -1,5 +1,6 @@
 ﻿@model Shop.Models.Spaceships.SpaceshipDeleteViewModel;
 
+<div class="bg-secondary rounded h-100 p-4">
 <h6 class="mb-4">
     Delete
 </h6>
@@ -78,7 +79,11 @@
             }
         </div>
     </dl>
+</div>
 
+</div>
+
+<div class="bg-secondary rounded h-100 p-4 mt-4">
     <form asp-action="Delete" asp-controller="Spaceship">
         <input type="hidden" asp-for="Ship.Id" />
         <input type="submit" value="Delete" class="btn btn-danger" />

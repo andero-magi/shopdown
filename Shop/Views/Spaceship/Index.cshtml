@@ -3,10 +3,8 @@
     int rowNumber = 1;
 }
 
-
-<h6 class="mb-4">
-    Spaceships
-</h6>
+<div class="bg-secondary rounded h-100 p-4">
+<h6 class="mb-4">Spaceships</h6>
 
 <div>
     <a asp-action="Create" asp-controller="Spaceship" type="submit" class="btn btn-primary">Create</a>
@@ -34,9 +32,15 @@
                     <td>@spaceships.Ship.BuildDate</td>
                     <td>@spaceships.Ship.Crew</td>
                     <td>
-                        <a asp-action="Details" asp-controller="Spaceship" asp-route-id="@spaceships.Ship.Id" class="btn btn-info">Details</a>
-                        <a asp-action="Update" asp-controller="Spaceship" asp-route-id="@spaceships.Ship.Id" class="btn btn-primary">Update</a>
-                        <a asp-action="Delete" asp-controller="Spaceship" asp-route-guid="@spaceships.Ship.Id" class="btn btn-outline-danger">Delete</a>
+                        <a asp-action="Details" asp-controller="Spaceship" asp-route-id="@spaceships.Ship.Id" class="btn btn-outline-info">
+                            <i class="bi bi-eye-fill"></i>
+                        </a>
+                        <a asp-action="Update" asp-controller="Spaceship" asp-route-id="@spaceships.Ship.Id" class="btn btn-outline-primary">
+                            <i class="bi bi-pencil-fill"></i>
+                        </a>
+                        <a asp-action="Delete" asp-controller="Spaceship" asp-route-guid="@spaceships.Ship.Id" class="btn btn-outline-danger">
+                            <i class="bi bi-trash-fill"></i>
+                        </a>
                     </td>
                 </tr>
 
@@ -45,3 +49,5 @@
         </tbody>
     </table>
 </form>
+
+</div>

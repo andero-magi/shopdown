@@ -1,11 +1,14 @@
 ﻿@model Shop.Models.Spaceships.SpaceshipCreateUpdateViewModel
 
+
+<form method="post" enctype="multipart/form-data">
+<div class="bg-secondary rounded h-100 p-4">
+
 <h6 class="mb-4">
     @ViewData["Title"]
 </h6>
 
 <div>
-    <form method="post" enctype="multipart/form-data">
         <input asp-for="Dto.Id" type="hidden"/>
         <input asp-for="Dto.CreatedAt" type="hidden"/>
         <input asp-for="Dto.LastUpdatedAt" type="hidden"/>
@@ -66,14 +69,23 @@
         {
             <partial name="_Images" model="image" />
         }
-
-        @if (ViewData["Title"]!.Equals("Create"))
-        {
-            <input asp-action="Create" asp-controller="Spaceship" type="submit" class="btn btn-primary" value="Create" />
-        } 
-        else
-        {
-            <input asp-action="Update" asp-controller="Spaceship" type="submit" class="btn btn-primary" value="Update" />
-        }
-    </form>
 </div>
+
+</div>
+
+
+<div class="bg-secondary rounded h-100 p-4 mt-4">
+    @if (ViewData["Title"]!.Equals("Create"))
+    {
+        <input asp-action="Create" asp-controller="Spaceship" type="submit" class="btn btn-primary" value="Create" />
+    }
+    else
+    {
+        <input asp-action="Update" asp-controller="Spaceship" type="submit" class="btn btn-primary" value="Update" />
+    }
+
+    <a asp-action="Index" asp-controller="Spaceship" class="btn btn-success">Back</a>
+</div>
+
+        
+    </form>

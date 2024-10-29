@@ -1,6 +1,8 @@
 ﻿@model Shop.Models.RealEstate.DbFileViewModel;
 
 <div class="form-group row p-4 bg-dark rounded mb-4 modal-open-image" style="max-width: 33vw;">
-    <h6 class="mb-4">@Model.Title</h6>
+    <h6 class="mb-4">
+        @Model.Title
+    </h6>
     <img class="card-img-top" src="/RealEstate/asset/@Model.ImageId" asp-append-version="true" />
 </div>
