@@ -9,8 +9,6 @@ using System.Threading.Tasks;
 public class LocationWeatherResultDto
 {
     public string CityName { get; set; }
-    public string CityCode { get; set; }
-    public int Rank { get; set; }
-    
 
+    public List<CurrentConditionDto> CurrentConditions { get; set; } = [];
 }

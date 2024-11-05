@@ -1,0 +1,68 @@
+﻿@model Shop.Models.Weather.WeatherSearchViewModel;
+
+@{
+    ViewData["Title"] = "Weather";
+}
+
+<div class="bg-secondary rounded h-100 p-4">
+    <h6 class="mb-4">Search for a forecast in a city</h6>
+
+    <form>
+        <div class="form-group row mb-3">
+            <label asp-for="SearchString" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                <input asp-for="SearchString" class="form-control"/>
+            </div>
+        </div>
+
+        <input asp-action="Index" 
+            asp-controller="Weather"
+            type="submit"
+            class="btn btn-primary"
+            value="Search"
+        />
+    </form>
+</div>
+
+@if (Model.Result == null || !Model.Result.CurrentConditions.Any())
+{
+    return;
+}
+
+<div class="bg-secondary rounded h-100 p-4 mt-4">    
+    Found @Model.Result.CurrentConditions.Count results.
+</div>
+
+@foreach (var current in Model.Result.CurrentConditions)
+{
+    <div class="bg-secondary rounded h-100 p-4 mt-4">    
+        <div>
+            @{
+                var l = current.Location;
+            }
+            <div class="d-inline text-muted">
+                @l.Region.LocalizedName,
+                @l.Country.LocalizedName, 
+                @l.AdministrativeArea.LocalizedName,
+            </div>
+            <h6 class="mb-4 d-inline">@current.Location.LocalizedName</h6>
+            (Current time: @current.LocalObservationDateTime)
+        </div>
+
+        <dl class="row">
+            <div class="form-group row">
+                <dt class="col-sm-2 col-form-label">Day time</dt>
+                <dd>@current.IsDayTime</dd>
+            </div>
+            <div class="form-group row">
+                <dt class="col-sm-2 col-form-label">Weather</dt>
+                <dd>@current.WeatherText</dd>
+            </div>
+
+            <div class="form-group row">
+                <dt class="col-sm-2 col-form-label">Temperature</dt>
+                <dd>@current.Temperature.Metric.Value C / @current.Temperature.Imperial.Value F</dd>
+            </div>
+        </dl>
+    </div>
+}

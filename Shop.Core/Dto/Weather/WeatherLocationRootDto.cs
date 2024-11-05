@@ -40,15 +40,6 @@ public class Country
     public string EnglishName { get; set; }
 }
 
-public class Elevation
-{
-    [JsonPropertyName("Metric")]
-    public Metric Metric { get; set; }
-
-    [JsonPropertyName("Imperial")]
-    public Imperial Imperial { get; set; }
-}
-
 public class GeoPosition
 {
     [JsonPropertyName("Latitude")]
@@ -58,31 +49,7 @@ public class GeoPosition
     public double? Longitude { get; set; }
 
     [JsonPropertyName("Elevation")]
-    public Elevation Elevation { get; set; }
-}
-
-public class Imperial
-{
-    [JsonPropertyName("Value")]
-    public int? Value { get; set; }
-
-    [JsonPropertyName("Unit")]
-    public string Unit { get; set; }
-
-    [JsonPropertyName("UnitType")]
-    public int? UnitType { get; set; }
-}
-
-public class Metric
-{
-    [JsonPropertyName("Value")]
-    public int? Value { get; set; }
-
-    [JsonPropertyName("Unit")]
-    public string Unit { get; set; }
-
-    [JsonPropertyName("UnitType")]
-    public int? UnitType { get; set; }
+    public Measurement Elevation { get; set; }
 }
 
 public class Region
@@ -95,12 +62,6 @@ public class Region
 
     [JsonPropertyName("EnglishName")]
     public string EnglishName { get; set; }
-}
-
-public class Root
-{
-    [JsonPropertyName("WeatherLocationRootDtos")]
-    public List<WeatherLocationRootDto> WeatherLocationRootDtos { get; set; }
 }
 
 public class SupplementalAdminArea
