@@ -11,4 +11,7 @@ public class LocationWeatherResultDto
     public string CityName { get; set; }
 
     public List<CurrentConditionDto> CurrentConditions { get; set; } = [];
+
+    public int RateLimit = -1;
+    public int RateLimitRemaining = -1;
 }

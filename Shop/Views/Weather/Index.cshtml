@@ -24,29 +24,49 @@
     </form>
 </div>
 
-@if (Model.Result == null || !Model.Result.CurrentConditions.Any())
+@if (Model.Result == null)
 {
     return;
 }
 
-<div class="bg-secondary rounded h-100 p-4 mt-4">    
-    Found @Model.Result.CurrentConditions.Count results.
-</div>
+@if (Model.Result.RateLimitRemaining < 1 && !Model.Result.CurrentConditions.Any())
+{
+    <div class="bg-secondary rounded h-100 p-4 mt-4">
+        <h1 class="text-center mt-4">Request Limit Reached</h1>
+
+        @{
+            var nextReset = DateTime.Now.Date.AddDays(1);
+        }
+
+        <div class="text-center text-muted mb-4">
+            Next request Limit reset: @Html.DisplayFor(m => nextReset);
+        </div>
+    </div>
+}
+else
+{
+    <div class="bg-secondary rounded h-100 p-4 mt-4">
+        <h6 class="mb-4">Found @Model.Result.CurrentConditions.Count results.</h6>
+
+        <div class="text-muted">
+            Requests Remaining: @Model.Result.RateLimitRemaining / @Model.Result.RateLimit
+        </div>
+    </div>
+}
 
 @foreach (var current in Model.Result.CurrentConditions)
 {
     <div class="bg-secondary rounded h-100 p-4 mt-4">    
-        <div>
+        <div class="mb-4">
             @{
                 var l = current.Location;
             }
             <div class="d-inline text-muted">
-                @l.Region.LocalizedName,
                 @l.Country.LocalizedName, 
                 @l.AdministrativeArea.LocalizedName,
             </div>
             <h6 class="mb-4 d-inline">@current.Location.LocalizedName</h6>
-            (Current time: @current.LocalObservationDateTime)
+            (Recorded time: @current.LocalObservationDateTime)
         </div>
 
         <dl class="row">
@@ -61,7 +81,7 @@
 
             <div class="form-group row">
                 <dt class="col-sm-2 col-form-label">Temperature</dt>
-                <dd>@current.Temperature.Metric.Value C / @current.Temperature.Imperial.Value F</dd>
+                <dd>@current.Temperature.Metric.Value &deg;C / @current.Temperature.Imperial.Value &deg;F</dd>
             </div>
         </dl>
     </div>
