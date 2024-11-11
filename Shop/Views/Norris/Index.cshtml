@@ -1,0 +1,30 @@
+﻿@model Shop.Models.Norris.NorrisViewModel;
+
+@{
+    ViewData["Title"] = "Chuck Norris Jokes";
+}
+
+<div class="bg-secondary rounded h-100 p-4 mt-4">
+    <h6 class="mb-4">@ViewData["Title"]</h6>
+
+    @if (Model.JokePresent)
+    {
+        <dl class="row">
+            <dt class="col-sm-1">URL</dt>
+            <dd class="col-sm-11"><a href="@Model.Url">@Model.Url</a></dd>
+            <dt class="col-sm-1">Joke</dt>
+            <dd class="col-sm-11">@Model.Joke</dd>
+        </dl>
+    }
+
+    <form class="mt-4">
+        <select asp-for="Category" asp-items="Model.Categories" class="form-select mb-3"></select>
+
+        <input asp-action="Index"
+               asp-controller="Norris"
+               type="submit"
+               class="btn btn-primary"
+               value="Search" 
+        />
+    </form>
+</div>
