@@ -1,0 +1,42 @@
+﻿@{
+    ViewData["Title"] = "Free Games";
+}
+
+<div class="bg-secondary rounded h-100 p-4 mt-4">
+    <h6 class="mb-4">Search</h6>
+
+    <div class="dropdown mb-4">
+        Tags
+        <div id="tag-element" class="dropdown-toggle bg-dark" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            
+        </div>
+        <div id="tag-menu" class="dropdown-menu bg-dark" aria-labelledby="dropdownMenuButton">
+
+        </div>
+    </div>
+
+    <label for="platform-select">Platform</label>
+    <select id="platform-select" class="form-control bg-dark text-white mb-4">
+        <option value="All" selected>All</option>
+        <option value="PC">PC</option>
+        <option value="WebBrowser">Web browser</option>
+    </select>
+
+    <label for="sort-select">Sort</label>
+    <select id="sort-select" class="form-control bg-dark text-white mb-4">
+        <option value="Relevance" selected>Relevance</option>
+        <option value="Alphabetic">Alphabetical</option>
+        <option value="Popularity">Popularity</option>
+        <option value="ReleaseDate">Release Date</option>
+    </select>
+
+    <button class="btn btn-primary" onclick="updateGames()">
+        Search
+    </button>
+</div>
+
+<div id="freegames-out" class="bg-secondary rounded h-100 p-4 mt-4">
+
+</div>
+
+<script src="~/js/freegames.js" defer></script>
