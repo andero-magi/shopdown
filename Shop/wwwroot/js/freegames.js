@@ -17,7 +17,7 @@ const GAME_TAGS = [
     "action-rpg", "action", "military",
     "martial-arts", "flight", "low-spec",
     "tower-defense", "horror", "mmorts"
-]
+].sort()
 
 let searchTags = []
 
@@ -29,6 +29,28 @@ let platformSelect = document.getElementById("platform-select")
 
 dropdownMenu.style.maxHeight = "33.33vh"
 dropdownMenu.style.overflowY = "scroll"
+
+outputDiv.onclick = (ev) => {
+    let t = ev.target
+
+    console.log("Click event")
+    console.log(t)
+
+    if (t.tagName == "a") {
+        return
+    }
+
+    while (!t.hasAttribute("game-url")) {
+      if (t == outputDiv) {
+        return
+      }
+
+      t = t.parentElement
+    }
+
+    let url = t.getAttribute("game-url")
+    window.open(url, "_blank").focus()
+}
 
 class GameTag {
     constructor(tag, dropdownMenuElement) {
@@ -60,13 +82,13 @@ class GameTag {
 
         let idx = searchTags.indexOf(this.tag)
         if (idx != -1) {
-            searchTags.splice(idx)
+            searchTags.splice(idx, 1)
         }
     }
 
     getTagBoxElement() {
         let div = document.createElement("div")
-        div.className = "btn btn-danger m-2"
+        div.className = "btn btn-danger m-2 tag-remove"
         div.textContent = this.tag
 
         let t = this
@@ -95,7 +117,7 @@ for (let tag of GAME_TAGS) {
 
 updateGames()
 
-function queryGames() {
+function getQueryUrl() {
     let url = `${window.location.origin}/freegames/query?`
 
     if (searchTags.length > 0) {
@@ -106,10 +128,14 @@ function queryGames() {
     url += `&Platform=${encodeURIComponent(platformSelect.value)}`
     url += `&Sort=${encodeURIComponent(sortSelect.value)}`
 
-    console.log(url)
+    return url
+}
+
+function queryGames() {
+    let url = getQueryUrl()
+
+    console.log("searchTags")
     console.log(searchTags)
-    console.log(platformSelect.value)
-    console.log(sortSelect.value)
 
     return fetch(url)
         .then(r => r.json())
@@ -128,8 +154,8 @@ function renderGames() {
         str += renderGameToHtmlString(g)
     }
 
-    outputDiv.innerHTML = `
-    <h6 class="mb-4">Games</h6>
+    outputDiv.innerHTML = /*HTML*/`
+    <h6 class="mb-4">Games (${games.length} results)</h6>
     <div style="display: flex; flex-wrap: wrap; justify-content: center">
       ${str}
     </div>
@@ -137,13 +163,24 @@ function renderGames() {
 }
 
 function renderGameToHtmlString(game) {
+    let publisher = game.publisher
+    let dev = game.developer
+    let credit
+
+    if (dev == publisher) {
+        credit = ` by ${dev}`
+    } else {
+        credit = `, published by ${publisher} and developed by ${dev}`
+    }
+
     return /*HTML*/`
-    <div class="card bg-dark mb-4 mx-2" style="width: 18rem;">
+    <div game-url="${game.game_url}" class="card game-card bg-secondary mb-4 mx-2" style="width: 18rem;">
        <div class="card-body d-flex flex-column">
          <img src="${game.thumbnail}" class="card-img-top">
-         <h5 class="card-title mt-4">${game.title}</h5>
-         <p class="card-text mb-4">${game.short_description}</p>
-         <a class="btn btn-primary align-self-start" style="margin-top:auto;" href="${game.game_url}">Game Page<a/>
+         <h5 class="card-title mt-4">${game.title} <i class="text-muted">(${game.release_date.substring(0, 4)})</i></h5>
+         <p class="card-text">${game.short_description}</p>
+         <p class="card-text mb-4">${game.genre}${credit}</p>
+         <a class="btn btn-primary align-self-start" style="margin-top:auto;" href="${game.game_url}" target="_blank">Game Page<a/>
        </div>
     </div>
     `

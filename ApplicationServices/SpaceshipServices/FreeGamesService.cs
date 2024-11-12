@@ -15,13 +15,36 @@ public class FreeGamesService: IFreeGamesService
 {
     public async Task<List<FreeGameDto>> QueryGames(FreeGameSearchDto? search)
     {
-        var url = $"https://www.freetogame.com/api/games{CreateSearchParams(search)}";
+        var url = $"https://www.freetogame.com/api/{CreateSearchParams(search)}";
 
 
         using (WebClient c = new())
         {
-            var jsonString = c.DownloadString(url);
-            return JsonSerializer.Deserialize<List<FreeGameDto>>(jsonString);
+            try 
+            {
+                var jsonString = c.DownloadString(url);
+                
+                if (jsonString.Contains("status\":0")) {
+                    return [];
+                }
+
+                return JsonSerializer.Deserialize<List<FreeGameDto>>(jsonString);
+            } 
+            catch (WebException exc) 
+            {
+                var httpRes = exc.Response as HttpWebResponse;
+                if (httpRes == null)
+                {
+                    throw;
+                }
+
+                if (httpRes.StatusCode == HttpStatusCode.NotFound)
+                {
+                    return [];
+                }
+
+                throw;
+            }
         }
     }
 
@@ -32,12 +55,16 @@ public class FreeGamesService: IFreeGamesService
             return string.Empty;
         }
 
-        string result = "?";
+        string result = "";
 
         if (search.Tags.Any())
         {
             string tagList = string.Join(".", search.Tags.ToArray());
-            result += $"&tag={tagList}";
+            result += $"filter?tag={tagList}";
+        } 
+        else 
+        {
+            result += "games?";
         }
 
         if (search.Platform != GamePlatform.All)

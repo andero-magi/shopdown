@@ -18,9 +18,9 @@ public class FreeGamesController : Controller
         return View();
     }
 
-    public async Task<IActionResult> Query([FromBody] FreeGameSearchDto? dto)
+    public async Task<IActionResult> Query(FreeGameSearchDto? dto)
     {
-        var list = await _service.QueryGames(null);
+        var list = await _service.QueryGames(dto);
         return Json(list);
     }
 }

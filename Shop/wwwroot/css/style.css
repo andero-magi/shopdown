@@ -287,3 +287,11 @@
     background: var(--dark);
     border-color: var(--primary);
 }
+
+.tag-remove:hover {
+    text-decoration: line-through;
+}
+.game-card:hover {
+    background-color: hsl(from var(--secondary) h s calc(l - 5)) !important;
+    cursor: pointer;
+}
