@@ -1,5 +1,4 @@
 ﻿let games = []
-let page = 1
 
 const GAME_TAGS = [
     "mmorpg", "shooter", "strategy",
@@ -32,10 +31,7 @@ dropdownMenu.style.overflowY = "scroll"
 
 outputDiv.onclick = (ev) => {
     let t = ev.target
-
-    console.log("Click event")
-    console.log(t)
-
+    
     if (t.tagName == "a") {
         return
     }
@@ -134,15 +130,10 @@ function getQueryUrl() {
 function queryGames() {
     let url = getQueryUrl()
 
-    console.log("searchTags")
-    console.log(searchTags)
-
     return fetch(url)
         .then(r => r.json())
         .then(j => {
-            page = 1
             games = j
-            console.log(j)
         })
 }
 
