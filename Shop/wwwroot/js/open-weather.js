@@ -139,7 +139,15 @@ function windInfo(wind) {
     return ""
   }
 
-  return createField("Wind", `${wind.speed} m/s`)
+  let speed = wind.speed
+  let unit = "m/s"
+
+  if (degreeSym == 'F') {
+    speed *= 2.2369362920544
+    unit = "mph"
+  }
+
+  return createField("Wind", `${speed.toFixed(2)} ${unit}`)
 }
 
 function createField(fieldName, value) {
