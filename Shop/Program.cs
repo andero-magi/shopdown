@@ -20,6 +20,7 @@ namespace Shop
             builder.Services.AddScoped<IWeatherForecastService, WeatherForecastService>();
             builder.Services.AddScoped<IFreeGamesService, FreeGamesService>();
             builder.Services.AddScoped<ICocktailService, CocktailService>();
+            builder.Services.AddScoped<IOpenWeatherService, OpenWeatherService>();
 
             // Add services to the container.
             builder.Services.AddDbContext<ShopContext>(options =>
