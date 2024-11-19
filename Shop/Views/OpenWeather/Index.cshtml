@@ -1,0 +1,23 @@
+﻿@{
+    ViewData["Title"] = "Open Weather";
+}
+
+<div class="bg-secondary rounded h-100 p-4">
+    <h6 class="mb-4">Search for a forecast in a city</h6>
+
+    <div class="row">
+        <label for="citysearch" class="col-sm-2 col-form-label">Search</label>
+        <input id="citysearch" name="citysearch" class="form-control"/>
+    </div>
+
+    <button class="btn btn-primary mt-4" id="searchbtn">Search</button>
+
+    <button class="btn mt-4" style="margin-left: 1rem;" id="deg-C">Celsius</button>
+    <button class="btn mt-4" id="deg-F">Fahrenheit</button>
+</div>
+
+<div id="output">
+
+</div>
+
+<script src="~/js/open-weather.js"></script>
