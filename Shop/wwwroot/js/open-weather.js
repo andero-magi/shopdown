@@ -113,6 +113,8 @@ function render() {
 
       <dl class="row">
         ${createField("Visibility", weather.visibility >= 10000 ? null : `${weather.visibility / 1000}km`)}
+        ${createField("Humidity", `${main.humidity}%`)}
+        ${createField("Pressure", `${main.pressure} hPa`)}
         ${createField("Weather", weather.weather[0].description)}
         ${createField("Rain", weather?.rain?.['1h'])}
         ${createField("Snow", weather?.snow?.['1h'])}
