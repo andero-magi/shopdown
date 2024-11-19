@@ -94,6 +94,9 @@ public class OpenWeatherCurrent
     [JsonPropertyName("timezone")]
     public int Timezone { get; set; }
 
+    [JsonPropertyName("timezone_name")]
+    public string? TimezoneName { get; set; }
+
     [JsonPropertyName("id")]
     public int Id { get; set; }
 
