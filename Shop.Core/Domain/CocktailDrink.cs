@@ -15,6 +15,9 @@ public class CocktailDrink
     [JsonPropertyName("name")]
     public string Name { get; set; }
 
+    [JsonPropertyName("saved")]
+    public bool? IsSaved { get; set; }
+
     [JsonPropertyName("category")]
     public string Category { get; set; }
 
@@ -35,6 +38,9 @@ public class CocktailDrink
 
     [JsonPropertyName("ingredients")]
     public List<Ingredient> Ingredients { get; set; } = [];
+
+    [JsonPropertyName("image")]
+    public string? Image { get; set; }
 }
 
 public class Ingredient
