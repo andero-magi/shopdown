@@ -12,6 +12,8 @@ namespace Shop
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Configuration.AddJsonFile("appsettings.secrets.json");
+
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddScoped<ISpaceshipServices, SpaceshipServices>();
@@ -21,6 +23,13 @@ namespace Shop
             builder.Services.AddScoped<IFreeGamesService, FreeGamesService>();
             builder.Services.AddScoped<ICocktailService, CocktailService>();
             builder.Services.AddScoped<IOpenWeatherService, OpenWeatherService>();
+
+            builder.Services.AddSingleton<IEmailService, EmailService>(x =>
+            {
+                return new EmailService(
+                    builder.Configuration.GetValue<string>("email-from"),
+                    builder.Configuration.GetValue<string>("email-pass"));
+            });
 
             // Add services to the container.
             builder.Services.AddDbContext<ShopContext>(options =>

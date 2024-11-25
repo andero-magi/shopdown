@@ -1,0 +1,44 @@
+﻿namespace Shop.ApplicationServices.SpaceshipServices;
+
+using Shop.Core.Dto;
+using Shop.Core.ServiceInterface;
+using System.Net;
+using System.Net.Mail;
+using System.Threading.Tasks;
+
+public class EmailService : IEmailService
+{
+
+    private readonly string _fromEmail;
+    private readonly string _password;
+
+    public EmailService(string fromEmail, string pass)
+    {
+        _fromEmail = fromEmail;
+        _password = pass;
+    }
+
+    public async Task SendEmail(EmailDto dto)
+    {
+        var from = new MailAddress(_fromEmail);
+        var to = new MailAddress(dto.Recipient);
+
+        var smtp = new SmtpClient
+        {
+            Host = "smtp.gmail.com",
+            Port = 587,
+            EnableSsl = true,
+            DeliveryMethod = SmtpDeliveryMethod.Network,
+            UseDefaultCredentials = false,
+            Credentials = new NetworkCredential(_fromEmail, _password)
+        };
+
+        using (var message = new MailMessage(from, to))
+        {
+            message.Subject = dto.Subject;
+            message.Body = dto.Body;
+            message.Sender = from;
+            smtp.Send(message);
+        }
+    }
+}

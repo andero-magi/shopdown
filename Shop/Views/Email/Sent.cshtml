@@ -1,0 +1,20 @@
+﻿@model Shop.Models.Email.EmailViewModel;
+
+@{
+    ViewData["Title"] = "Email Sent";
+}
+
+<div class="bg-secondary rounded h-100 p-4">
+    <h6 class="mb-4">Email sent!</h6>
+
+    <dl class="row">
+        <dt class="col-sm-2">Recipient</dt>
+        <dd class="col-sm-10">@Model.Dto.Recipient</dd>
+        <dt class="col-sm-2">Subject</dt>
+        <dd class="col-sm-10">@Model.Dto.Subject</dd>
+        <dt class="col-sm-2">Body</dt>
+        <dd class="col-sm-10"><pre>@Model.Dto.Body</pre></dd>
+    </dl>
+
+    <a asp-action="Index" asp-controller="Email" class="btn btn-primary">Back</a>
+</div>
