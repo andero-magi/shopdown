@@ -19,6 +19,7 @@ public class EmailController : Controller
         return View(new EmailViewModel() { Dto = new()});
     }
 
+    [HttpPost]
     public async Task<IActionResult> Send(EmailViewModel vm)
     {
         await _service.SendEmail(vm.Dto);

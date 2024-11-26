@@ -8,7 +8,7 @@
 <div class="bg-secondary rounded h-100 p-4">
     <h6 class="mb-4">Send an Email</h6>
 
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
         <div class="form-group row mb-3">
             <label asp-for="Dto.Recipient" class="col-sm-2 col-form-label"></label>
             <input class="form-control col-sm-10" asp-for="Dto.Recipient" type="email" />
@@ -20,6 +20,10 @@
         <div class="form-group row mb-3">
             <label asp-for="Dto.Body" class="col-sm-2 col-form-label"></label>
             <textarea rows="15" asp-for="Dto.Body" class="form-control col-sm-10 font-monospace"></textarea>
+        </div>
+        <div class="form-group row mb-3">
+            <label asp-for="Dto.Body" class="col-sm-2 col-form-label"></label>
+            <input class="col-sm-5 custom-file form-control bg-dark custom-file-input" asp-for="Dto.Files" multiple type="file" />
         </div>
 
         <input asp-action="Send" asp-controller="Email" type="submit" class="btn btn-primary" value="Send Email"/>

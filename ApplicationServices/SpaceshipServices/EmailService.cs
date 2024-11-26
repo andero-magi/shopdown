@@ -4,6 +4,7 @@ using Shop.Core.Dto;
 using Shop.Core.ServiceInterface;
 using System.Net;
 using System.Net.Mail;
+using System.Net.Mime;
 using System.Threading.Tasks;
 
 public class EmailService : IEmailService
@@ -35,6 +36,27 @@ public class EmailService : IEmailService
 
         using (var message = new MailMessage(from, to))
         {
+            if (dto.Files != null && dto.Files.Count > 0)
+            {
+                foreach (var file in dto.Files)
+                {
+                    var stream = file.OpenReadStream();
+                    string mimeType = MimeKit.MimeTypes.GetMimeType(file.FileName);
+                    ContentType type = new(mimeType);
+                    Attachment attch = new(stream, type);
+
+                    var disp = attch.ContentDisposition;
+                    disp.ReadDate = DateTime.Now;
+                    disp.CreationDate = DateTime.Now;
+                    disp.ModificationDate = DateTime.Now;
+                    disp.FileName = file.FileName;
+                    disp.Size = file.Length;
+                    disp.DispositionType = DispositionTypeNames.Attachment;
+
+                    message.Attachments.Add(attch);
+                }
+            }
+
             message.Subject = dto.Subject;
             message.Body = dto.Body;
             message.Sender = from;

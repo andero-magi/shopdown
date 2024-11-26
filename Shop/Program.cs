@@ -83,6 +83,7 @@ namespace Shop
                 try
                 {
                     var ctx = services.GetRequiredService<ShopContext>();
+                    ctx.Database.Migrate();
                     DbInitializer.InitDb(ctx);
                 }
                 catch (Exception ex)
