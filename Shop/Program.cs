@@ -3,6 +3,8 @@ using Shop.Core.ServiceInterface;
 using Shop.Data;
 using Shop.ApplicationServices.SpaceshipServices;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.AspNetCore.Identity;
+using Shop.Core.Domain;
 
 namespace Shop
 {
@@ -23,6 +25,19 @@ namespace Shop
             builder.Services.AddScoped<IFreeGamesService, FreeGamesService>();
             builder.Services.AddScoped<ICocktailService, CocktailService>();
             builder.Services.AddScoped<IOpenWeatherService, OpenWeatherService>();
+
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>(o =>
+            {
+                o.SignIn.RequireConfirmedAccount = true;
+                o.Password.RequiredLength = 3;
+                o.Tokens.EmailConfirmationTokenProvider = "CustomEmailConfirmation";
+                o.Lockout.MaxFailedAccessAttempts = 3;
+                o.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+            })
+                .AddEntityFrameworkStores<ShopContext>()
+                .AddDefaultTokenProviders()
+                .AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>("CustomEmailConfirmation")
+                .AddDefaultUI();
 
             builder.Services.AddSingleton<IEmailService, EmailService>(x =>
             {
