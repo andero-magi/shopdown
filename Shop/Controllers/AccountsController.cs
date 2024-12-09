@@ -31,7 +31,7 @@ public class AccountsController : Controller
         {
             var ser = new ApplicationUser()
             {
-                UserName = vm.Email,
+                UserName = vm.Username,
                 Email = vm.Email,
                 City = vm.City,
             };
@@ -51,7 +51,7 @@ public class AccountsController : Controller
                 ViewBag.ErrorTitle = "Registration successful";
                 ViewBag.ErrorMessage = "Before you can log in, please confirm your email address.";
 
-                return View("Error");
+                return View("EmailError");
             }
 
             foreach (var error in result.Errors)
@@ -60,6 +60,63 @@ public class AccountsController : Controller
             }
         }
 
-        return View("Error");
+        return View();
+    }
+
+    [HttpGet]
+    [AllowAnonymous]
+    public async Task<IActionResult> Login(string? returnUrl)
+    {
+        LoginViewModel vm = new()
+        {
+            ReturnUrl = returnUrl,
+            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList()
+        };
+
+        return View(vm);
+    }
+
+    [HttpPost]
+    [AllowAnonymous]
+    public async Task<IActionResult> Login(LoginViewModel vm, string? returnUrl)
+    {
+        if (!ModelState.IsValid)
+        {
+            var user = await _manager.FindByEmailAsync(vm.Email);
+
+            if (user != null && !user.EmailConfirmed && (await _manager.CheckPasswordAsync(user, vm.Password)))
+            {
+                ModelState.AddModelError(string.Empty, "Email not confirmed yet");
+                return View(vm);
+            }
+
+            var result = await _signInManager.PasswordSignInAsync(vm.Email, vm.Password, vm.RememberMe, false);
+
+            if (result.Succeeded)
+            {
+                if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+                {
+                    return Redirect(returnUrl);
+                }
+
+                return RedirectToAction("Index", "Home");
+            }
+
+            if (result.IsLockedOut)
+            {
+                return View("AccountLocked");
+            }
+
+            ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
+        }
+
+        return View(vm);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Logout()
+    {
+        await _signInManager.SignOutAsync();
+        return RedirectToAction("Index", "Home");
     }
 }

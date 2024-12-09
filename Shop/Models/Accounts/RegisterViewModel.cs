@@ -6,7 +6,7 @@ public class RegisterViewModel
 {
     [Required]
     [EmailAddress]
-    [ValidEmailDomain(".com", ErrorMessage = "Only .com email domains allowed")]
+    //[ValidEmailDomain(".com", ErrorMessage = "Only .com email domains allowed")]
     public string Email { get; set; }
 
     [Required]
@@ -20,4 +20,7 @@ public class RegisterViewModel
     public string ConfirmPassword { get; set; }
 
     public string City { get; set; }
+
+    [Required]
+    public string Username { get; set; }
 }

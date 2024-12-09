@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity;
+@inject SignInManager<Shop.Core.Domain.ApplicationUser> _manager;
+@{
+    bool signedIn = _manager.IsSignedIn(User);
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -61,13 +67,18 @@
 
             <div class="navbar-nav w-100">
                 <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                <a class="nav-link" asp-area="" asp-controller="Spaceship" asp-action="Index">Spaceship</a>
-                <a class="nav-link" asp-area="" asp-controller="RealEstate" asp-action="Index">Real Estate</a>
-                <a class="nav-link" asp-area="" asp-controller="Weather" asp-action="Index">Weather</a>
+
+                @if (signedIn)
+                {
+                    <a class="nav-link" asp-area="" asp-controller="Spaceship" asp-action="Index">Spaceship</a>
+                    <a class="nav-link" asp-area="" asp-controller="RealEstate" asp-action="Index">Real Estate</a>
+                    <a class="nav-link" asp-area="" asp-controller="Weather" asp-action="Index">Weather</a>
+                    <a class="nav-link" asp-area="" asp-controller="OpenWeather" asp-action="Index">Open Weather</a>
+                }
+
                 <a class="nav-link" asp-area="" asp-controller="Norris" asp-action="Index">Chuck Norris Jokes</a>
                 <a class="nav-link" asp-area="" asp-controller="Cocktail" asp-action="Index">Cocktails</a>
                 <a class="nav-link" asp-area="" asp-controller="FreeGames" asp-action="Index">Free Games</a>
-                <a class="nav-link" asp-area="" asp-controller="OpenWeather" asp-action="Index">Open Weather</a>
                 <a class="nav-link" asp-area="" asp-controller="Email" asp-action="Index">Send Emails</a>
                 <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
             </div>
@@ -86,7 +97,15 @@
             </a>
 
             <div class="navbar-nav" style="margin-left: auto;">
-                <a class="nav-link" asp-controller="Accounts" asp-action="Register">Register</a>
+                @if (!signedIn)
+                {
+                    <a class="nav-link" asp-controller="Accounts" asp-action="Register">Register</a>
+                    <a class="nav-link" asp-controller="Accounts" asp-action="Login">Login</a>
+                } 
+                else
+                {
+                    <a class="nav-link" asp-controller="Accounts" asp-action="Logout">Logout</a>
+                }
             </div>
         </nav>
 
