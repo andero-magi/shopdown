@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Shop.Core.Domain;
 using Shop.Core.Dto;
@@ -9,6 +10,7 @@ using Shop.Models.Spaceships;
 
 namespace Shop.Controllers
 {
+    [Authorize]
     public class SpaceshipController : Controller
     {
         private readonly ShopContext _context;

@@ -1,10 +1,12 @@
 ﻿namespace Shop.Controllers;
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shop.Core.Dto.Weather;
 using Shop.Core.ServiceInterface;
 using Shop.Models.Weather;
 
+[Authorize]
 public class WeatherController : Controller
 {
     private readonly IWeatherForecastService _weather;

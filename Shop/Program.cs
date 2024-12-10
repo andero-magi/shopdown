@@ -39,6 +39,12 @@ namespace Shop
                 .AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>("CustomEmailConfirmation")
                 .AddDefaultUI();
 
+            builder.Services.ConfigureApplicationCookie(o =>
+            {
+                o.LoginPath = "/accounts/login";
+                o.AccessDeniedPath = "/accounts/login";
+            });
+
             builder.Services.AddSingleton<IEmailService, EmailService>(x =>
             {
                 return new EmailService(

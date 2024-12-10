@@ -18,6 +18,14 @@ public class LoginViewModel
 
     public string? ReturnUrl { get; set; }
 
+    public LoginType? Type { get; set; }
+
     public IList<AuthenticationScheme>? ExternalLogins { get; set; }
 
+}
+
+public enum LoginType
+{
+    Regular,
+    Admin
 }

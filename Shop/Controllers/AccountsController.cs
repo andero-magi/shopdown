@@ -23,6 +23,21 @@ public class AccountsController : Controller
         return View();
     }
 
+    [HttpGet]
+    [AllowAnonymous]
+    public async Task<IActionResult> ConfirmEmail([FromQuery] Guid? userId, [FromQuery] string? token)
+    {
+        if (userId == null || string.IsNullOrEmpty(token))
+        {
+            return BadRequest();
+        }
+
+        var user = await _manager.FindByIdAsync(userId.ToString());
+        var result = await _manager.ConfirmEmailAsync(user, token);
+
+        return RedirectToAction("Index", "Home");
+    }
+
     [HttpPost]
     [AllowAnonymous]
     public async Task<IActionResult> Register(RegisterViewModel vm)
@@ -80,7 +95,7 @@ public class AccountsController : Controller
     [AllowAnonymous]
     public async Task<IActionResult> Login(LoginViewModel vm, string? returnUrl)
     {
-        if (!ModelState.IsValid)
+        if (ModelState.IsValid)
         {
             var user = await _manager.FindByEmailAsync(vm.Email);
 
@@ -90,7 +105,7 @@ public class AccountsController : Controller
                 return View(vm);
             }
 
-            var result = await _signInManager.PasswordSignInAsync(vm.Email, vm.Password, vm.RememberMe, false);
+            var result = await _signInManager.PasswordSignInAsync(user, vm.Password, vm.RememberMe, false);
 
             if (result.Succeeded)
             {
@@ -113,10 +128,69 @@ public class AccountsController : Controller
         return View(vm);
     }
 
-    [HttpPost]
+    [HttpGet]
     public async Task<IActionResult> Logout()
     {
         await _signInManager.SignOutAsync();
         return RedirectToAction("Index", "Home");
     }
+
+    public IActionResult ForgotPassword()
+    {
+        return View(new ForgotPasswordViewModel());
+    }
+
+    [HttpPost]
+    [AllowAnonymous]
+    public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel vm)
+    {
+        if (ModelState.IsValid)
+        {
+            var user = await _manager.FindByEmailAsync(vm.Email);
+
+            if (user != null && (await _manager.IsEmailConfirmedAsync(user)))
+            {
+                var token = await _manager.GeneratePasswordResetTokenAsync(user);
+                var link = Url.Action("ResetPassword", "Accounts", new { userId = user.Id, token }, Request.Scheme);
+
+                return View("ForgotPasswordConfirm");
+            }
+
+            return View("ForgotPasswordConfirm");
+        }
+
+        return View(vm);
+    }
+
+    [HttpGet]
+    public IActionResult ChangePassword()
+    {
+        return View(new ChangePasswordViewModel());
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> ChangePassword(ChangePasswordViewModel vm)
+    {
+        if (ModelState.IsValid)
+        {
+            var user = await _manager.GetUserAsync(User);
+
+            if (user == null)
+            {
+                return RedirectToAction(nameof(Login));
+            }
+
+            var result = await _manager.ChangePasswordAsync(user, vm.CurrentPassword, vm.NewPassword);
+
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
+        }
+
+        return View();
+    }
+
 }

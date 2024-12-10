@@ -1,9 +1,11 @@
 ﻿namespace Shop.Controllers;
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shop.Core.Dto.OpenWeather;
 using Shop.Core.ServiceInterface;
 
+[Authorize]
 public class OpenWeatherController : Controller
 {
     private readonly IOpenWeatherService _service;

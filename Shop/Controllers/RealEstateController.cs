@@ -8,7 +8,9 @@ using Shop.Core.Domain;
 using Shop.Core.Dto;
 using Shop.Models.RealEstate;
 using Microsoft.AspNetCore.StaticFiles;
+using Microsoft.AspNetCore.Authorization;
 
+[Authorize]
 public class RealEstateController : Controller
 {
     private readonly ShopContext _context;
