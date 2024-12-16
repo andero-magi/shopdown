@@ -2,12 +2,13 @@
 
 using System.ComponentModel.DataAnnotations;
 
-public class ChangePasswordViewModel
+public class ResetPasswordViewModel
 {
     [Required]
-    [DataType(DataType.Password)]
-    [Display(Name = "Current Password")]
-    public string CurrentPassword { get; set; }
+    public Guid UserId { get; set; }
+
+    [Required]
+    public string Token { get; set; }
 
     [Required]
     [DataType(DataType.Password)]

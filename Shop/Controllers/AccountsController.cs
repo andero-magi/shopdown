@@ -4,17 +4,25 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Shop.Core.Domain;
+using Shop.Core.Dto;
+using Shop.Core.ServiceInterface;
 using Shop.Models.Accounts;
+using Shop.Models.RealEstate;
 
 public class AccountsController : Controller
 {
     private readonly UserManager<ApplicationUser> _manager;
     private readonly SignInManager<ApplicationUser> _signInManager;
+    private readonly IEmailService _emails;
 
-    public AccountsController(UserManager<ApplicationUser> manager, SignInManager<ApplicationUser> signInManager)
+    public AccountsController(
+        UserManager<ApplicationUser> manager, 
+        SignInManager<ApplicationUser> signInManager,
+        IEmailService emails)
     {
         _manager = manager;
         _signInManager = signInManager;
+        _emails = emails;
     }
 
     [HttpGet]
@@ -35,7 +43,9 @@ public class AccountsController : Controller
         var user = await _manager.FindByIdAsync(userId.ToString());
         var result = await _manager.ConfirmEmailAsync(user, token);
 
-        return RedirectToAction("Index", "Home");
+        await _signInManager.SignInAsync(user, true);
+
+        return View();
     }
 
     [HttpPost]
@@ -65,6 +75,25 @@ public class AccountsController : Controller
 
                 ViewBag.ErrorTitle = "Registration successful";
                 ViewBag.ErrorMessage = "Before you can log in, please confirm your email address.";
+
+                EmailDto email = new()
+                {
+                    Recipient = vm.Email,
+                    Subject = "Confirm Email",
+                    IsHtmlBody = true,
+                    Body = $"""
+                    Thank you for signing up to the website!
+                        
+                    <p>
+                      Please confirm your email by clicking <a href="{confirmationLink}">here.</a>
+                    </p>
+                    <p>
+                      - Shop CRUD
+                    </p>
+                    """
+                };
+
+                await _emails.SendEmail(email);
 
                 return View("EmailError");
             }
@@ -153,6 +182,19 @@ public class AccountsController : Controller
                 var token = await _manager.GeneratePasswordResetTokenAsync(user);
                 var link = Url.Action("ResetPassword", "Accounts", new { userId = user.Id, token }, Request.Scheme);
 
+                EmailDto dto = new()
+                {
+                    Recipient = user.Email,
+                    Subject = "Password reset",
+                    IsHtmlBody = true,
+                    Body = $"""
+                    Password reset link:
+                    <a href="{link}">Click here to reset password</a>
+                    """
+                };
+
+                await _emails.SendEmail(dto);
+
                 return View("ForgotPasswordConfirm");
             }
 
@@ -193,4 +235,41 @@ public class AccountsController : Controller
         return View();
     }
 
+    [HttpPost]
+    [AllowAnonymous]
+    public async Task<IActionResult> ResetPassword(ResetPasswordViewModel vm)
+    {
+        if (!ModelState.IsValid)
+        {
+            return View(vm);
+        }
+
+        var user = await _manager.FindByIdAsync(vm.UserId.ToString());
+        if (user == null)
+        {
+            return RedirectToAction("Index", "Home");
+        }
+
+        var result = await _manager.ResetPasswordAsync(user, vm.Token, vm.ConfirmPassword);
+
+        if (result.Succeeded)
+        {
+            return RedirectToAction("Index", "Home");
+        }
+
+        return View(vm);
+    }
+
+    [HttpGet]
+    [AllowAnonymous]
+    public async Task<IActionResult> ResetPassword(Guid userId, string token)
+    {
+        ResetPasswordViewModel vm = new()
+        {
+            UserId = userId,
+            Token = token
+        };
+
+        return View(vm);
+    }
 }

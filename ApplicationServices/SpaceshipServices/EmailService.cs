@@ -60,6 +60,7 @@ public class EmailService : IEmailService
             message.Subject = dto.Subject;
             message.Body = dto.Body;
             message.Sender = from;
+            message.IsBodyHtml = dto.IsHtmlBody;
             smtp.Send(message);
         }
     }
