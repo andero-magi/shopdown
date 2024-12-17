@@ -39,6 +39,13 @@ namespace Shop
                 .AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>("CustomEmailConfirmation")
                 .AddDefaultUI();
 
+            builder.Services.AddAuthentication().AddGoogle(opt =>
+            {
+                var cfg = builder.Configuration;
+                opt.ClientId = cfg["google-client-id"];
+                opt.ClientSecret = cfg["google-secret"];
+            });
+
             builder.Services.ConfigureApplicationCookie(o =>
             {
                 o.LoginPath = "/accounts/login";

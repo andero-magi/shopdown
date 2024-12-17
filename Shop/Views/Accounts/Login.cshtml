@@ -43,3 +43,17 @@
         </div>
     </div>
 </div>
+
+@if (Model.ExternalLogins == null || Model.ExternalLogins.Count < 1)
+{
+    return;
+}
+
+<div class="bg-secondary rounded h-100 p-4 mt-4">
+    <h6 class="mb-4">External logins</h6>
+
+    @foreach (var s in Model.ExternalLogins)
+    {
+        <p>@s.DisplayName @s.Name</p>
+    }
+</div>

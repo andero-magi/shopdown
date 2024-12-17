@@ -57,8 +57,7 @@ public class AccountsController : Controller
             var ser = new ApplicationUser()
             {
                 UserName = vm.Username,
-                Email = vm.Email,
-                City = vm.City,
+                Email = vm.Email
             };
 
             var result = await _manager.CreateAsync(ser, vm.Password);
