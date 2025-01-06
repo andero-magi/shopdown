@@ -19,8 +19,6 @@ public class RegisterViewModel
     [Compare(nameof(Password), ErrorMessage = "Password and comfirmation password do not match.")]
     public string ConfirmPassword { get; set; }
 
-    public string City { get; set; }
-
     [Required]
     public string Username { get; set; }
 }

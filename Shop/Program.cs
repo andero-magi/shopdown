@@ -5,6 +5,7 @@ using Shop.ApplicationServices.SpaceshipServices;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.AspNetCore.Identity;
 using Shop.Core.Domain;
+using Shop.Hubs;
 
 namespace Shop
 {
@@ -18,6 +19,9 @@ namespace Shop
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddSignalR();
+
             builder.Services.AddScoped<ISpaceshipServices, SpaceshipServices>();
             builder.Services.AddScoped<IFileService, FileServices>();
             builder.Services.AddScoped<IRealEstateService, RealEstateService>();
@@ -39,12 +43,12 @@ namespace Shop
                 .AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>("CustomEmailConfirmation")
                 .AddDefaultUI();
 
-            builder.Services.AddAuthentication().AddGoogle(opt =>
-            {
-                var cfg = builder.Configuration;
-                opt.ClientId = cfg["google-client-id"];
-                opt.ClientSecret = cfg["google-secret"];
-            });
+            //builder.Services.AddAuthentication().AddGoogle(opt =>
+            //{
+            //    var cfg = builder.Configuration;
+            //    opt.ClientId = cfg["google-client-id"];
+            //   opt.ClientSecret = cfg["google-secret"];
+            //});
 
             builder.Services.ConfigureApplicationCookie(o =>
             {
@@ -98,6 +102,8 @@ namespace Shop
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+
+            app.MapHub<ChatHub>("/chatHub");
 
             app.Run();
         }
